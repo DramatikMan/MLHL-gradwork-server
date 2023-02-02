@@ -1,4 +1,4 @@
-path = app
+path = server
 
 check_code:
 	autoflake -i -r --remove-all-unused-imports $(path)
