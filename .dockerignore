@@ -1,0 +1,8 @@
+### ~ Docker ~ ###
+.dockerignore
+Dockerfile
+*.yml
+
+### ~ git ~ ###
+.git*
+README.md
