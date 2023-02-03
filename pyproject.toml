@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "app"
+name = "gradwork-server"
 version = "0.1.0"
 description = ""
 authors = ["Sergey Pavlov <self@sergeypavlov.dev>"]
@@ -12,6 +12,9 @@ pydantic = "^1.10.4"
 typer = "^0.7.0"
 uvicorn = {version = "^0.20.0", extras = ["standard"]}
 gunicorn = "^20.1.0"
+dramatiq = {version = "^1.13.0", extras = ["rabbitmq", "watch"]}
+alembic = "^1.9.2"
+sqlalchemy = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.0.1"
@@ -27,7 +30,7 @@ profile = "black"
 skip_glob = ["*/alembic/*", "*.pyx"]
 
 [tool.mypy]
-exclude = "alembic|celery"
+exclude = "alembic"
 ignore_missing_imports = true
 show_error_codes = true
 
