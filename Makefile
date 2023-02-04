@@ -6,3 +6,9 @@ check_code:
 	isort $(path)
 	flake8 --show-source $(path)
 	mypy --strict $(path)
+
+server/dev:
+	uvicorn server.api:app \
+		--reload \
+		--host 0.0.0.0 \
+		--port 8000

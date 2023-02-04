@@ -15,7 +15,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_VERSION=1.3.2
 
-RUN apt update && apt install --no-install-recommends -y make \
+RUN apt update && apt install --no-install-recommends -y build-essential libpq-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pip install "poetry==$POETRY_VERSION" \
     && poetry config virtualenvs.in-project true \
@@ -24,7 +24,8 @@ RUN apt update && apt install --no-install-recommends -y make \
 COPY pyproject.toml poetry.lock* ./
 ARG build_env
 RUN bash -c 'if [[ "$build_env" == "dev" ]]; then poetry install; else poetry install --only main; fi'
-COPY . .
+COPY .flake8 Makefile ./
+COPY server server
 RUN poetry install --only-root
 
 ##################
