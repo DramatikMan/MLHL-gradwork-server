@@ -7,14 +7,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11"
-starlite = "^1.50.2"
+starlite = "^1.51.0"
 pydantic = "^1.10.4"
 typer = "^0.7.0"
 uvicorn = {version = "^0.20.0", extras = ["standard"]}
 gunicorn = "^20.1.0"
-dramatiq = {version = "^1.13.0", extras = ["rabbitmq", "watch"]}
+dramatiq = {version = "^1.14.0", extras = ["rabbitmq", "watch"]}
 alembic = "^1.9.2"
-sqlalchemy = "^2.0.1"
+sqlalchemy = "^2.0.2"
 psycopg2 = "^2.9.5"
 
 [tool.poetry.group.dev.dependencies]
@@ -23,7 +23,7 @@ black = "^23.1.0"
 flake8 = "^6.0.0"
 flake8-bugbear = "^23.1.20"
 isort = "^5.12.0"
-mypy = "^0.991"
+mypy = "^1.0.0"
 
 [tool.isort]
 multi_line_output = 3
@@ -34,12 +34,6 @@ skip_glob = ["*/alembic/*", "*.pyx"]
 exclude = "alembic"
 ignore_missing_imports = true
 show_error_codes = true
-
-[tool.pytest.ini_options]
-filterwarnings = [
-    "ignore::urllib3.connectionpool.InsecureRequestWarning",
-    "ignore::sqlalchemy.exc.SAWarning",
-]
 
 [build-system]
 requires = ["poetry-core"]
