@@ -1,0 +1,17 @@
+services:
+
+  gwserver:
+    build:
+      context: .
+    command: ["gwserver", "api", "start"]
+    environment:
+      GW_DB_URL: postgresql+psycopg2://postgres:postgres@database:5432/postgres
+    ports:
+      - "8000:8000"
+
+  database:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres

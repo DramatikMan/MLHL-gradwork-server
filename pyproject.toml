@@ -1,9 +1,8 @@
 [tool.poetry]
-name = "gradwork-server"
+name = "gwserver"
 version = "0.1.0"
 description = ""
 authors = ["Sergey Pavlov <self@sergeypavlov.dev>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11"
@@ -28,13 +27,16 @@ mypy = "^1.0.0"
 [tool.isort]
 multi_line_output = 3
 profile = "black"
-skip_glob = ["*/alembic/*", "*.pyx"]
+skip_glob = ["*/migrations/*", "*.pyx"]
 
 [tool.mypy]
-exclude = "alembic"
+exclude = "migrations"
 ignore_missing_imports = true
 show_error_codes = true
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gwserver = "gwserver.bin:entrypoint"

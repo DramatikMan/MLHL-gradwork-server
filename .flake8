@@ -3,3 +3,5 @@ max-line-length = 100
 max-complexity = 10
 count = True
 statistics = True
+ignore = B008
+# B008 - function calls in argument defaults

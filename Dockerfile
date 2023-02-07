@@ -25,7 +25,7 @@ COPY pyproject.toml poetry.lock* ./
 ARG build_env
 RUN bash -c 'if [[ "$build_env" == "dev" ]]; then poetry install; else poetry install --only main; fi'
 COPY .flake8 Makefile ./
-COPY server server
+COPY gwserver gwserver
 RUN poetry install --only-root
 
 ##################
@@ -33,5 +33,5 @@ FROM base AS final
 RUN chown -R $UID:0 /app && chmod -R g+wx /app
 ENV PATH="/app/.venv/bin:/app:$PATH"
 COPY --from=builder /app/.venv /app/.venv
-COPY server server
+COPY gwserver gwserver
 USER $UID
