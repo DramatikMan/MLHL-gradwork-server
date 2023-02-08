@@ -35,3 +35,4 @@ ENV PATH="/app/.venv/bin:/app:$PATH"
 COPY --from=builder /app/.venv /app/.venv
 COPY gwserver gwserver
 USER $UID
+CMD gwserver api start

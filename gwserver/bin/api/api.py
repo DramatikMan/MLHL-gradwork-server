@@ -9,7 +9,7 @@ api = t.Typer()
 
 @api.command(name="start")
 def start(
-    workers: int = t.Option(4),
+    workers: int = t.Option(config.API_WORKERS),
     port: int = t.Option(config.API_PORT),
 ) -> None:
     sp.run(

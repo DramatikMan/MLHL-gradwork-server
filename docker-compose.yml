@@ -5,7 +5,7 @@ services:
       context: .
     command: ["gwserver", "api", "start"]
     environment:
-      GW_DB_URL: postgresql+psycopg2://postgres:postgres@database:5432/postgres
+      GWSERVER_DB_URL: postgresql+psycopg2://postgres:postgres@database:5432/postgres
     ports:
       - "8000:8000"
 

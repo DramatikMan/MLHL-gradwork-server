@@ -1,3 +1,3 @@
-from .image import Image
+from .model import Category, Image
 
-__all__ = ("Image",)
+__all__ = ("Category", "Image")
