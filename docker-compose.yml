@@ -3,7 +3,6 @@ services:
   gwserver:
     build:
       context: .
-    command: ["gwserver", "api", "start"]
     environment:
       GWSERVER_DB_URL: postgresql+psycopg2://postgres:postgres@database:5432/postgres
     ports:
