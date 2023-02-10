@@ -1,5 +1,6 @@
 ### ~ private ~ ###
 *.env
+*.json
 
 ### ~ Python ~ ###
 __pycache__
