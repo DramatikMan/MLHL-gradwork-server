@@ -10,6 +10,12 @@ class Settings(BaseSettings):
     # database
     DB_URL: str
 
+    # S3
+    S3_URL: str
+    S3_ID: str
+    S3_SECRET: str
+    S3_BUCKET: str
+
     class Config:
         env_prefix = "GWSERVER_"
 

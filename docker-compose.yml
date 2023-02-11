@@ -3,12 +3,12 @@ services:
   gwserver:
     build:
       context: .
-    environment:
-      GWSERVER_DB_URL: postgresql+psycopg2://postgres:postgres@database:5432/postgres
+    env_file:
+      - ./secret.env
     ports:
       - "8000:8000"
 
-  database:
+  postgres:
     image: postgres:alpine
     environment:
       POSTGRES_USER: postgres

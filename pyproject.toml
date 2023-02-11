@@ -15,6 +15,7 @@ dramatiq = {version = "^1.14.0", extras = ["rabbitmq", "watch"]}
 alembic = "^1.9.2"
 sqlalchemy = "^2.0.2"
 psycopg2 = "^2.9.5"
+boto3 = "^1.26.69"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.0.1"
