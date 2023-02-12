@@ -15,7 +15,6 @@ class S3:
             endpoint_url=config.S3_URL,
             aws_access_key_id=config.S3_ID,
             aws_secret_access_key=config.S3_SECRET,
-            verify=False,
         )
 
     def download(self, key: str) -> bytes:
