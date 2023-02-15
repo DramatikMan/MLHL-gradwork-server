@@ -22,3 +22,6 @@ class Database:
             yield session
         finally:
             session.close()
+
+
+DB = Database()
