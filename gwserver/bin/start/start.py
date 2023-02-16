@@ -4,11 +4,11 @@ import typer as t
 
 from gwserver.core import config
 
-api = t.Typer(help="API server.")
+start = t.Typer(help="Application start.")
 
 
-@api.command(help="Start API server.")
-def start(
+@start.command(help="Start API server.")
+def api(
     workers: int = t.Option(config.API_WORKERS, help="Nubmer of workers."),
     port: int = t.Option(config.API_PORT, help="Server port."),
 ) -> None:
