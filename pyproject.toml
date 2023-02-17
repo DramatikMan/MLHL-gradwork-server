@@ -32,7 +32,7 @@ profile = "black"
 skip_glob = ["*/migrations/*", "*.pyx"]
 
 [tool.mypy]
-exclude = "migrations"
+exclude = "migrations|tasks"
 ignore_missing_imports = true
 show_error_codes = true
 

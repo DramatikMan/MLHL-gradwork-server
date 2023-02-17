@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     S3_SECRET: str
     S3_BUCKET: str
 
+    # RabbitMQ
+    RABBITMQ_HOST: str
+
     class Config:
         env_prefix = "GWSERVER_"
 

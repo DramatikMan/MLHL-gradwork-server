@@ -22,3 +22,11 @@ def api(
         ],
         check=True,
     )
+
+
+@start.command(help="Start workers for background tasks.")
+def workers() -> None:
+    sp.run(
+        ["dramatiq", "gwserver.tasks"],
+        check=True,
+    )

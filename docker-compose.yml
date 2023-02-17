@@ -14,3 +14,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
+
+  broker:
+    image: rabbitmq:management
