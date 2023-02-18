@@ -1,20 +1,12 @@
-from typing import Literal
+from starlite import OpenAPIConfig, Router, Starlite
 
-from pydantic import BaseModel
-from starlite import OpenAPIConfig, Starlite, get
-
-
-class OK(BaseModel):
-    text: Literal["OK"] = "OK"
-
-
-@get("/status")
-def status() -> OK:
-    return OK()
-
+from . import controller
 
 app = Starlite(
-    route_handlers=[status],
+    route_handlers=[
+        Router(path="/image", route_handlers=[controller.Image], tags=["Image"]),
+        Router(path="/category", route_handlers=[controller.Category], tags=["Category"]),
+    ],
     openapi_config=OpenAPIConfig(
         title="Gradwork API",
         version="1.0.0",
