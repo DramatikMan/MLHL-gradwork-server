@@ -17,6 +17,7 @@ sqlalchemy = "^2.0.2"
 psycopg2 = "^2.9.5"
 boto3 = "^1.26.69"
 pandas = "^1.5.3"
+pillow = "^9.4.0"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.0.1"

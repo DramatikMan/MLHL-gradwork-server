@@ -1,19 +1,13 @@
-from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from starlite import HTTPException, Provide, ResponseSpec
+from starlite import Provide, ResponseSpec, get
 from starlite.controller import Controller as Base
-from starlite.handlers import get
 from starlite.status_codes import HTTP_404_NOT_FOUND
 
-from gwserver import model, typings
-from gwserver.api.schema import UID, error
+from gwserver import model
+from gwserver.api.schema import CATEGORY, UID, error
+from gwserver.api.schema.error import ApiException
 from gwserver.core.database import DB
-
-
-class CATEGORY(BaseModel):
-    uid: UID
-    title: typings.CATEGORY
 
 
 class Controller(Base):
@@ -36,6 +30,6 @@ class Controller(Base):
         record = db.get(model.Category, uid)
 
         if record is None:
-            raise HTTPException(**error.NOT_FOUND().dict())
+            raise ApiException(error.NOT_FOUND)
 
         return CATEGORY(uid=record.uid, title=record.title)

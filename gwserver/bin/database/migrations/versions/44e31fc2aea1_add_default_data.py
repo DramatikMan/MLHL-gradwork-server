@@ -70,6 +70,9 @@ def upgrade() -> None:
         ],
     )
 
+    op.execute(f'ALTER SEQUENCE "CATEGORY_uid_seq" RESTART WITH {len(categories)}')
+    op.execute(f'ALTER SEQUENCE "IMAGE_uid_seq" RESTART WITH {database.shape[0]}')
+
 
 def downgrade() -> None:
     op.execute(f'DELETE FROM "{image_table.name}"')

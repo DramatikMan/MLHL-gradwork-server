@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     S3_ID: str
     S3_SECRET: str
     S3_BUCKET: str
+    S3_USER_DATA_SUBPATH: str = "userdata"
 
     # RabbitMQ
     RABBITMQ_HOST: str

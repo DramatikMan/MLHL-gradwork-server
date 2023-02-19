@@ -1,4 +1,9 @@
 from . import error
-from .schema import UID
+from .schema import CATEGORY, IMAGE, UID
 
-__all__ = ("UID", "error")
+__all__ = (
+    "UID",
+    "error",
+    "IMAGE",
+    "CATEGORY",
+)
