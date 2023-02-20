@@ -70,8 +70,8 @@ def upgrade() -> None:
         ],
     )
 
-    op.execute(f'ALTER SEQUENCE "CATEGORY_uid_seq" RESTART WITH {len(categories)}')
-    op.execute(f'ALTER SEQUENCE "IMAGE_uid_seq" RESTART WITH {database.shape[0]}')
+    op.execute(f'ALTER SEQUENCE "CATEGORY_uid_seq" RESTART WITH {len(categories) + 1}')
+    op.execute(f'ALTER SEQUENCE "IMAGE_uid_seq" RESTART WITH {database.shape[0] + 1}')
 
 
 def downgrade() -> None:

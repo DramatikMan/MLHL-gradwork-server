@@ -1,3 +1,3 @@
-from .tasks import predict
+from .tasks import upload
 
-__all__ = ("predict",)
+__all__ = ("upload",)

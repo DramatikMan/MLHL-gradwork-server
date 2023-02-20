@@ -4,10 +4,10 @@ import typer as t
 
 from gwserver.core import config
 
-start = t.Typer(help="Application start.")
+cmd = t.Typer(help="Application start.")
 
 
-@start.command(help="Start API server.")
+@cmd.command(help="Start API server.")
 def api(
     workers: int = t.Option(config.API_WORKERS, help="Nubmer of workers."),
     port: int = t.Option(config.API_PORT, help="Server port."),
@@ -24,7 +24,7 @@ def api(
     )
 
 
-@start.command(help="Start workers for background tasks.")
+@cmd.command(help="Start workers for background tasks.")
 def workers() -> None:
     sp.run(
         ["dramatiq", "gwserver.tasks"],

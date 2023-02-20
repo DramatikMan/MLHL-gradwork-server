@@ -1,12 +1,20 @@
 services:
 
-  gwserver:
+  api:
     build:
       context: .
+    command: ["gwserver", "start", "api"]
     env_file:
       - ./secret.env
     ports:
       - "8000:8000"
+
+  workers:
+    build:
+      context: .
+    command: ["gwserver", "start", "workers"]
+    env_file:
+      - ./secret.env
 
   postgres:
     image: postgres:alpine

@@ -1,3 +1,4 @@
+import base64
 import io
 
 from PIL import Image
@@ -20,7 +21,7 @@ from starlite.status_codes import (
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
 
-from gwserver import model
+from gwserver import model, tasks
 from gwserver.api.schema import IMAGE, UID, error
 from gwserver.api.schema.error import ApiException
 from gwserver.core import config
@@ -88,6 +89,8 @@ class Controller(Base):
         db.add(record)
         db.commit()
         db.refresh(record)
+
+        tasks.upload.send(path=path, content=base64.b64encode(content).decode())
 
         return IMAGE(
             uid=record.uid,

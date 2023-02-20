@@ -6,7 +6,9 @@ ARG UID=1000
 ARG GID=1000
 
 RUN addgroup --system --gid $GID drm \
-    && adduser --system --disabled-password --no-create-home --uid $UID --shell /sbin/nologin --ingroup drm --gecos drm drm
+    && adduser --system --disabled-password --no-create-home --uid $UID --shell /sbin/nologin --ingroup drm --gecos drm drm \
+    && apt update && apt install --no-install-recommends -y build-essential libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 ##################
 FROM base AS builder
@@ -15,9 +17,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_VERSION=1.3.2
 
-RUN apt update && apt install --no-install-recommends -y build-essential libpq-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install "poetry==$POETRY_VERSION" \
+RUN pip install "poetry==$POETRY_VERSION" \
     && poetry config virtualenvs.in-project true \
     && mkdir .venv
 
