@@ -1,25 +1,10 @@
 import base64
 import io
 
+import sqlalchemy as sa
+import starlite as s
 from PIL import Image
-from sqlalchemy import func, select
-from sqlalchemy.orm import Session
-from starlite import (
-    Body,
-    HTTPException,
-    Provide,
-    RequestEncodingType,
-    ResponseSpec,
-    UploadFile,
-    get,
-    post,
-)
-from starlite.controller import Controller as Base
-from starlite.status_codes import (
-    HTTP_404_NOT_FOUND,
-    HTTP_422_UNPROCESSABLE_ENTITY,
-    HTTP_500_INTERNAL_SERVER_ERROR,
-)
+from starlite import status_codes
 
 from gwserver import model, tasks
 from gwserver.api.schema import IMAGE, UID, error
@@ -28,18 +13,18 @@ from gwserver.core import config
 from gwserver.core.database import DB
 
 
-class Controller(Base):
-    @get(
+class Controller(s.Controller):
+    @s.get(
         path="{uid:int}",
-        dependencies={"db": Provide(DB)},
+        dependencies={"db": s.Provide(DB)},
         responses={
-            HTTP_404_NOT_FOUND: ResponseSpec(
+            status_codes.HTTP_404_NOT_FOUND: s.ResponseSpec(
                 model=error.NOT_FOUND,
                 description="Image not found",
             )
         },
     )
-    async def get_image(self, uid: UID, db: Session) -> IMAGE:
+    async def get_image(self, uid: UID, db: sa.orm.Session) -> IMAGE:
         record = db.get(model.Image, uid)
 
         if record is None:
@@ -51,11 +36,11 @@ class Controller(Base):
             category=record.category.title,
         )
 
-    @post(
+    @s.post(
         content_media_type="image/jpeg",
-        dependencies={"db": Provide(DB)},
+        dependencies={"db": s.Provide(DB)},
         responses={
-            HTTP_422_UNPROCESSABLE_ENTITY: ResponseSpec(
+            status_codes.HTTP_422_UNPROCESSABLE_ENTITY: s.ResponseSpec(
                 model=error.IMAGE_CHECK_FAILURE,
                 description="Could not parse the payload as a JPEG image of size (224, 224)",
             ),
@@ -63,8 +48,8 @@ class Controller(Base):
     )
     async def post_image(
         self,
-        db: Session,
-        data: UploadFile = Body(media_type=RequestEncodingType.MULTI_PART),
+        db: sa.orm.Session,
+        data: s.UploadFile = s.Body(media_type=s.RequestEncodingType.MULTI_PART),
     ) -> IMAGE:
         content = await data.read()
 
@@ -74,12 +59,12 @@ class Controller(Base):
         except Exception:
             raise ApiException(error.IMAGE_CHECK_FAILURE)
 
-        stmt = select(func.count()).select_from(model.Image)
+        stmt = sa.select(sa.func.count()).select_from(model.Image)
         count = db.scalar(stmt)
 
         if count is None:
-            raise HTTPException(
-                status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+            raise s.HTTPException(
+                status_code=status_codes.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail='Image count scalar returned "None".',
             )
 
