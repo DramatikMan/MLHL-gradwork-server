@@ -1,14 +1,23 @@
-# Смежные проекты
+![example workflow](https://github.com/DramatikMan/MLHL-gradwork-server/actions/workflows/build.yml/badge.svg)
+
+---
+
+## Смежные проекты
 
 - [web UI](https://github.com/DramatikMan/MLHL-gradwork-web-UI)
 
-# CLI
+---
+
+## CLI
 
 ```
 gwserver --help
+
 ```
 
-# Переменные окружения
+---
+
+## Переменные окружения
 
 ```python
 # API

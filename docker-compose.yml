@@ -1,7 +1,7 @@
 services:
 
   api:
-    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
+    image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
     command: ["gwserver", "start", "api"]
     env_file:
       - ./secret.env
@@ -12,7 +12,7 @@ services:
           condition: service_completed_successfully
 
   init-db:
-    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
+    image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
     command: ["gwserver", "db", "upgrade", "head"]
     env_file:
       - ./secret.env
@@ -21,7 +21,7 @@ services:
         condition: service_started
 
   workers:
-    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
+    image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
     command: ["gwserver", "start", "workers"]
     env_file:
       - ./secret.env
@@ -33,7 +33,7 @@ services:
 
   postgres:
     image: postgres:alpine
-    environment:
+    env_file:
       - ./secret.env
 
   broker:

@@ -1,4 +1,4 @@
-name: Build and update latest image
+name: build
 
 on:
 
