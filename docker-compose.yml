@@ -1,27 +1,43 @@
 services:
 
   api:
-    build:
-      context: .
+    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
     command: ["gwserver", "start", "api"]
     env_file:
       - ./secret.env
     ports:
       - "8000:8000"
+    depends_on:
+      init-db:
+          condition: service_completed_successfully
+
+  init-db:
+    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
+    command: ["gwserver", "db", "upgrade", "head"]
+    env_file:
+      - ./secret.env
+    depends_on:
+      postgres:
+        condition: service_started
 
   workers:
-    build:
-      context: .
+    image: ghcr.io/DramatikMan/MLHL-gradwork-server:latest
     command: ["gwserver", "start", "workers"]
     env_file:
       - ./secret.env
+    depends_on:
+      init-db:
+          condition: service_completed_successfully
+      broker:
+        condition: service_started
 
   postgres:
     image: postgres:alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      - ./secret.env
 
   broker:
     image: rabbitmq:management
+    depends_on:
+      init-db:
+          condition: service_completed_successfully
