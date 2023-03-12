@@ -6,26 +6,26 @@ authors = ["Sergey Pavlov <self@sergeypavlov.dev>"]
 
 [tool.poetry.dependencies]
 python = "~3.11"
-starlite = "^1.51.0"
-pydantic = "^1.10.4"
-typer = "^0.7.0"
-uvicorn = {version = "^0.20.0", extras = ["standard"]}
-gunicorn = "^20.1.0"
-dramatiq = {version = "^1.14.0", extras = ["rabbitmq", "watch"]}
-alembic = "^1.9.2"
-sqlalchemy = "^2.0.2"
-psycopg2 = "^2.9.5"
-boto3 = "^1.26.69"
-pandas = "^1.5.3"
-pillow = "^9.4.0"
+starlite = "*"
+pydantic = "*"
+typer = "*"
+uvicorn = {version = "*", extras = ["standard"]}
+gunicorn = "*"
+dramatiq = {version = "*", extras = ["rabbitmq", "watch"]}
+alembic = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+boto3 = "*"
+pandas = "*"
+pillow = "*"
 
 [tool.poetry.group.dev.dependencies]
-autoflake = "^2.0.1"
-black = "^23.1.0"
-flake8 = "^6.0.0"
-flake8-bugbear = "^23.1.20"
-isort = "^5.12.0"
-mypy = "^1.0.0"
+autoflake = "*"
+black = "*"
+flake8 = "*"
+flake8-bugbear = "*"
+isort = "*"
+mypy = "*"
 
 [tool.isort]
 multi_line_output = 3
