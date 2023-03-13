@@ -12,10 +12,10 @@ def revision(message: str = t.Argument(..., help="Migration description.")) -> N
 
 
 @cmd.command(help="Upgrade database schema to target version.")
-def upgrade(target: str = t.Argument(..., help="Upgrade target version.")) -> None:
+def upgrade(target: str = t.Argument(..., help="Upgrade to target version.")) -> None:
     alembic.command.upgrade(config.alembic_config, target.lower())
 
 
 @cmd.command(help="Downgrade database schema to target version.")
-def downgrade(target: str = t.Argument(..., help="Downgrade target version.")) -> None:
+def downgrade(target: str = t.Argument(..., help="Downgrade to target version.")) -> None:
     alembic.command.downgrade(config.alembic_config, target.lower())
