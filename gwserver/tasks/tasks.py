@@ -1,7 +1,9 @@
 import base64
 import random
+import tempfile
 
 import dramatiq
+import onnxruntime as ort
 import sqlalchemy as sa
 from dramatiq.brokers.rabbitmq import RabbitmqBroker
 
@@ -21,6 +23,10 @@ def upload(path: str, content: str) -> None:
 
 @dramatiq.actor
 def predict(uid: int, content: str) -> None:
+    with tempfile.TemporaryFile() as handle:
+        handle.write(s3.download("model.onnx"))
+        model = ort.InferenceSession('')
+
     db = DB.make_session()
 
     try:
