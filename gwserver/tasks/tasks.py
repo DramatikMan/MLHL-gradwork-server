@@ -1,16 +1,19 @@
 import base64
-import random
+import io
+import logging
 import tempfile
 
 import dramatiq
+import numpy as np
 import onnxruntime as ort
 import sqlalchemy as sa
 from dramatiq.brokers.rabbitmq import RabbitmqBroker
+from PIL import Image
 
-from gwserver import model
 from gwserver.core import config
 from gwserver.core.database import DB
 from gwserver.core.s3 import s3
+from gwserver.model import Image as Mapper
 
 rabbitmq_broker = RabbitmqBroker(host=config.RABBITMQ_HOST)
 dramatiq.set_broker(rabbitmq_broker)
@@ -23,22 +26,26 @@ def upload(path: str, content: str) -> None:
 
 @dramatiq.actor
 def predict(uid: int, content: str) -> None:
-    with tempfile.TemporaryFile() as handle:
+    with tempfile.NamedTemporaryFile() as handle:
         handle.write(s3.download("model.onnx"))
-        model = ort.InferenceSession('')
+        inference = ort.InferenceSession(handle.name, providers=["CPUExecutionProvider"])
 
-    db = DB.make_session()
+        binary = base64.b64decode(content.encode("utf-8"))
+        image = Image.open(io.BytesIO(binary), formats=("JPEG",)).resize((299, 299))
+        array = np.expand_dims(np.moveaxis(np.asarray(image).astype(np.float32), -1, 0), axis=0)
+        array /= 255.0
 
-    try:
-        stmt = (
-            sa.update(model.Image)
-            .where(model.Image.uid == uid)
-            .values(category_uid=random.randint(1, 15))  # * placeholder random classifier
-        )
+        outputs = inference.run(None, {"input": array})
+        prediction = int(outputs[0][0].argmax(0)) + 1
 
-        db.execute(stmt)
-        db.commit()
-    except Exception as e:
-        raise RuntimeError(f"Failed to classify image [uid = {uid}]:\n{e}")
-    finally:
-        db.close()
+        db = DB.make_session()
+
+        try:
+            stmt = sa.update(Mapper).where(Mapper.uid == uid).values(category_uid=prediction)
+            db.execute(stmt)
+            db.commit()
+        except Exception as e:
+            logging.exception(f"Failed to classify image [uid = {uid}]:\n{e}")
+            raise
+        finally:
+            db.close()

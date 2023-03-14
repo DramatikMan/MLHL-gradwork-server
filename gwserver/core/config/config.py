@@ -24,4 +24,4 @@ class Settings(BaseSettings):
         env_prefix = "GWSERVER_"
 
 
-config = Settings()
+config = Settings()  # type: ignore[call-arg]
