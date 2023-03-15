@@ -1,4 +1,4 @@
-from pydantic import BaseSettings
+from pydantic import BaseSettings, PrivateAttr
 
 
 class Settings(BaseSettings):
@@ -18,7 +18,12 @@ class Settings(BaseSettings):
     S3_USER_DATA_SUBPATH: str = "userdata"
 
     # RabbitMQ
-    RABBITMQ_HOST: str
+    RABBITMQ_HOST: str = "broker"
+
+    # model
+    MODEL_KEY: str = "model.onnx"
+    MODEL_VOLUME: str = "/tmp/model"
+    MODEL_FNAME: str = PrivateAttr("model.onnx")
 
     class Config:
         env_prefix = "GWSERVER_"

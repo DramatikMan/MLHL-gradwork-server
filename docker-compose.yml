@@ -8,17 +8,19 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      init-db:
+      init:
           condition: service_completed_successfully
 
-  init-db:
+  init:
     image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
-    command: ["gwserver", "db", "upgrade", "head"]
+    command: ["gwserver", "init", "all"]
     env_file:
       - ./secret.env
     depends_on:
       postgres:
         condition: service_started
+    volumes:
+      - model:/tmp/model
 
   workers:
     image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
@@ -26,10 +28,12 @@ services:
     env_file:
       - ./secret.env
     depends_on:
-      init-db:
+      init:
           condition: service_completed_successfully
       broker:
         condition: service_started
+    volumes:
+      - model:/tmp/model
 
   postgres:
     image: postgres:alpine
@@ -39,5 +43,8 @@ services:
   broker:
     image: rabbitmq:management
     depends_on:
-      init-db:
+      init:
           condition: service_completed_successfully
+
+volumes:
+  model:

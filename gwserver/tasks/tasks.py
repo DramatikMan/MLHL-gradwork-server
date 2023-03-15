@@ -1,7 +1,7 @@
 import base64
 import io
 import logging
-import tempfile
+from pathlib import Path
 
 import dramatiq
 import numpy as np
@@ -26,26 +26,25 @@ def upload(path: str, content: str) -> None:
 
 @dramatiq.actor
 def predict(uid: int, content: str) -> None:
-    with tempfile.NamedTemporaryFile() as handle:
-        handle.write(s3.download("model.onnx"))
-        inference = ort.InferenceSession(handle.name, providers=["CPUExecutionProvider"])
+    path = Path(config.MODEL_VOLUME).joinpath(config.MODEL_FNAME)
+    inference = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
 
-        binary = base64.b64decode(content.encode("utf-8"))
-        image = Image.open(io.BytesIO(binary), formats=("JPEG",)).resize((299, 299))
-        array = np.expand_dims(np.moveaxis(np.asarray(image).astype(np.float32), -1, 0), axis=0)
-        array /= 255.0
+    binary = base64.b64decode(content.encode("utf-8"))
+    image = Image.open(io.BytesIO(binary), formats=("JPEG",)).resize((299, 299))
+    array = np.expand_dims(np.moveaxis(np.asarray(image).astype(np.float32), -1, 0), axis=0)
+    array /= 255.0
 
-        outputs = inference.run(None, {"input": array})
-        prediction = int(outputs[0][0].argmax(0)) + 1
+    outputs = inference.run(None, {"input": array})
+    prediction = int(outputs[0][0].argmax(0)) + 1
 
-        db = DB.make_session()
+    db = DB.make_session()
 
-        try:
-            stmt = sa.update(Mapper).where(Mapper.uid == uid).values(category_uid=prediction)
-            db.execute(stmt)
-            db.commit()
-        except Exception as e:
-            logging.exception(f"Failed to classify image [uid = {uid}]:\n{e}")
-            raise
-        finally:
-            db.close()
+    try:
+        stmt = sa.update(Mapper).where(Mapper.uid == uid).values(category_uid=prediction)
+        db.execute(stmt)
+        db.commit()
+    except Exception as e:
+        logging.exception(f"Failed to classify image [uid = {uid}]:\n{e}")
+        raise
+    finally:
+        db.close()
