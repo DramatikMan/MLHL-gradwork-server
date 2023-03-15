@@ -20,7 +20,7 @@ def init_model() -> None:
     if not path.exists():
         raise RuntimeError("Model volume path does not exist.")
 
-    with open(path.joinpath(config.MODEL_FNAME), "wb") as handle:
+    with open(path.joinpath(config._MODEL_FNAME), "wb") as handle:
         handle.write(s3.download(config.MODEL_KEY))
 
 

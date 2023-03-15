@@ -26,7 +26,7 @@ def upload(path: str, content: str) -> None:
 
 @dramatiq.actor
 def predict(uid: int, content: str) -> None:
-    path = Path(config.MODEL_VOLUME).joinpath(config.MODEL_FNAME)
+    path = Path(config.MODEL_VOLUME).joinpath(config._MODEL_FNAME)
     inference = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
 
     binary = base64.b64decode(content.encode("utf-8"))

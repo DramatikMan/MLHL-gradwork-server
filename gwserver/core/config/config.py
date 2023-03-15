@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     # model
     MODEL_KEY: str = "model.onnx"
     MODEL_VOLUME: str = "/tmp/model"
-    MODEL_FNAME: str = PrivateAttr("model.onnx")
+    _MODEL_FNAME: str = PrivateAttr("model.onnx")
 
     class Config:
         env_prefix = "GWSERVER_"
