@@ -12,8 +12,7 @@ class Base(DeclarativeBase):
 
 class Database:
     def __init__(self) -> None:
-        conn_string = f"postgresql+psycopg2://{config.DB_USER}:{config.DB_PWD}@{config.DB_HOST}:{config.DB_PORT}/{config.DB_NAME}"  # noqa: E501
-        self.engine = create_engine(url=conn_string)
+        self.engine = create_engine(url=config._DB_URL)
         self.make_session = sessionmaker(bind=self.engine)
 
     def __call__(self) -> Generator[Session, None, None]:

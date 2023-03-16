@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseSettings, PrivateAttr
 
 
@@ -13,6 +15,7 @@ class Settings(BaseSettings):
     DB_PWD: str = "postgres"
     DB_PORT: int = 5432
     DB_NAME: str = "postgres"
+    _DB_URL: str = PrivateAttr()
 
     # S3
     S3_URL: str = "https://storage.yandexcloud.net"
@@ -32,5 +35,9 @@ class Settings(BaseSettings):
     class Config:
         env_prefix = "GWSERVER_"
 
+    def __init__(self, **data: Any):
+        super().__init__(**data)
+        self._DB_URL = f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PWD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"  # noqa: E501
 
-config = Settings()  # type: ignore[call-arg]
+
+config = Settings()
