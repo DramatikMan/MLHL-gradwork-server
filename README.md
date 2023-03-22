@@ -1,4 +1,4 @@
-![example workflow](https://github.com/DramatikMan/MLHL-gradwork-server/actions/workflows/build.yml/badge.svg)
+![build](https://github.com/DramatikMan/MLHL-gradwork-server/actions/workflows/build.yml/badge.svg)
 
 ---
 

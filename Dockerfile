@@ -15,7 +15,7 @@ FROM base AS builder
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1 \
-    POETRY_VERSION=1.4.0
+    POETRY_VERSION=1.4.1
 
 RUN pip install "poetry==$POETRY_VERSION" \
     && poetry config virtualenvs.in-project true \
