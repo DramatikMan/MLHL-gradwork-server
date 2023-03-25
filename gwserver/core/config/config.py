@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     # API
     API_ROOT_PATH: str = ""
     API_WORKERS: int = 4
-    API_PORT: int = 8000
+    API_PORT: int = 8080
 
     # database
     DB_HOST: str = "postgres"
