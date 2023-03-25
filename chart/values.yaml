@@ -1,0 +1,31 @@
+deployment:
+  image:
+    repository: ghcr.io/dramatikman/mlhl-gradwork-server
+    tag: latest
+
+  ingress:
+    hosts:
+      - host: gw.sergeypavlov.dev
+        paths:
+          - path: /api
+            pathType: Prefix
+    tls:
+    - secretName: tls.sergeypavlov.dev
+      hosts:
+        - gw.sergeypavlov.dev
+
+postgresql:
+  fullNameOverride: gwserver-postgresql
+  auth:
+    postgresPassword: postgres
+    username: postgres
+    password: postgres
+    database: postgres
+  primary:
+    service:
+      type: NodePort
+    persistence:
+      size: 1Gi
+
+rabbitmq:
+  fullNameOverride: gwserver-rabbitmq

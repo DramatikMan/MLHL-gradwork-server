@@ -19,8 +19,8 @@ class Settings(BaseSettings):
 
     # S3
     S3_URL: str = "https://storage.yandexcloud.net"
-    S3_ID: str
-    S3_SECRET: str
+    S3_ID: str = ""
+    S3_SECRET: str = ""
     S3_BUCKET: str = "gwserver"
     S3_USER_DATA_SUBPATH: str = "userdata"
 

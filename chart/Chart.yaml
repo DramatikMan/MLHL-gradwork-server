@@ -1,0 +1,18 @@
+apiVersion: v2
+name: gwserver
+description: gwserver deployment
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+dependencies:
+  - name: k3s-deployment
+    repository: "https://dramatikman.github.io/charts"
+    version: "0.1.1"
+    alias: deployment
+  - name: postgresql
+    repository: "https://charts.bitnami.com/bitnami"
+    version: "12.2.6"
+    alias: deployment
+  - name: rabbitmq
+    repository: "https://charts.bitnami.com/bitnami"
+    version: "11.12.0"

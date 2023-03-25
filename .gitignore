@@ -8,3 +8,6 @@ __pycache__
 ### ~ development ~ ###
 dev*
 scripts
+
+### ~ Helm ~ ###
+chart/**/*.tgz

@@ -1,0 +1,12 @@
+dependencies:
+- name: k3s-deployment
+  repository: https://dramatikman.github.io/charts
+  version: 0.1.1
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.2.6
+- name: rabbitmq
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.12.0
+digest: sha256:a4083bed1f2ec684c152f3529173eec0823d49a701e72ef426842659a4a566aa
+generated: "2023-03-25T19:33:26.579176656+03:00"
