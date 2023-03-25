@@ -32,3 +32,4 @@ rabbitmq:
   auth:
     username: rabbitmq
     password: rabbitmq
+    erlangCookie: erlangCookie
