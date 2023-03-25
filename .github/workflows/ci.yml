@@ -97,7 +97,7 @@ jobs:
               --atomic \
               --timeout=1m0s \
               --set 'deployment.image.tag=${{ github.sha }}' \
-              gwui ${{ github.event.repository.name }}/chart
+              gwserver ${{ github.event.repository.name }}/chart
 
       - name: Clean up artifacts
         uses: appleboy/ssh-action@v0.1.8

@@ -2,7 +2,7 @@
 
 ---
 
-## Смежные проекты
+## Related projects
 
 - [web UI](https://github.com/DramatikMan/MLHL-gradwork-web-UI)
 
@@ -16,7 +16,7 @@ gwserver --help
 
 ---
 
-## Переменные окружения
+## Environment variables
 
 ```python
 # API
