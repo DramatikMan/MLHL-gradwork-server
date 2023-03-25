@@ -33,8 +33,8 @@ GWSERVER_DB_NAME: str = "postgres"
 
 # S3
 GWSERVER_S3_URL: str = "https://storage.yandexcloud.net"
-GWSERVER_S3_ID: str
-GWSERVER_S3_SECRET: str
+GWSERVER_S3_ID: str = ""  # override required
+GWSERVER_S3_SECRET: str ""  # override required
 GWSERVER_S3_BUCKET: str = "gwserver"
 GWSERVER_S3_USER_DATA_SUBPATH: str = "userdata"
 

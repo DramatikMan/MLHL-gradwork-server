@@ -29,3 +29,6 @@ postgresql:
 
 rabbitmq:
   fullNameOverride: gwserver-rabbitmq
+  auth:
+    username: rabbitmq
+    password: rabbitmq
