@@ -12,7 +12,6 @@ dependencies:
   - name: postgresql
     repository: "https://charts.bitnami.com/bitnami"
     version: "12.2.6"
-    alias: deployment
   - name: rabbitmq
     repository: "https://charts.bitnami.com/bitnami"
     version: "11.12.0"
