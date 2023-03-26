@@ -20,7 +20,7 @@ services:
       postgres:
         condition: service_started
     volumes:
-      - model:/app/model
+      - model:/tmp/model
 
   workers:
     image: ghcr.io/dramatikman/mlhl-gradwork-server:latest
@@ -33,7 +33,7 @@ services:
       broker:
         condition: service_started
     volumes:
-      - model:/app/model
+      - model:/tmp/model
 
   postgres:
     image: postgres:alpine

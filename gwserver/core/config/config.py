@@ -29,7 +29,7 @@ class Settings(BaseSettings):
 
     # model
     MODEL_KEY: str = "model.onnx"
-    MODEL_VOLUME: str = "/app/model"
+    MODEL_VOLUME: str = "/tmp/model"
     _MODEL_FNAME: str = PrivateAttr("model.onnx")
 
     class Config:

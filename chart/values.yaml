@@ -3,6 +3,9 @@ main:
     repository: ghcr.io/dramatikman/mlhl-gradwork-server
     tag: latest
 
+  command: ["gwserver"]
+  args: ["start", "api"]
+
   ingress:
     hosts:
       - host: gw.sergeypavlov.dev
@@ -15,19 +18,20 @@ main:
         - gw.sergeypavlov.dev
 
   initContainers:
-    - name: init-database
-      image:
-        repository: ghcr.io/dramatikman/mlhl-gradwork-server
-        tag: latest
+    - name: init
       command: ["gwserver"]
-      args: ["init", "database"]
+      args: ["init", "all"]
+
+  sidecars:
+    - name: workers
+      command: ["gwserver"]
+      args: ["start", "workers"]
 
   persistentVolumes:
-    - name: model
+    - name: gwserver-model
       mountPath: /tmp/model
       volumeClaim:
         size: 100Mi
-        accessMode: ReadWriteMany
 
 postgresql:
   fullNameOverride: gwserver-postgresql
