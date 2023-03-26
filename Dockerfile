@@ -33,6 +33,6 @@ FROM base AS final
 ENV PATH="/app/.venv/bin:/app:$PATH"
 COPY --from=builder /app/.venv /app/.venv
 COPY gwserver gwserver
-RUN chown -R $UID:0 /app && chmod -R g+wx /app
+RUN chown -R $UID:$GID /app && chmod -R ug+wx /app
 USER $UID
 CMD gwserver start api
