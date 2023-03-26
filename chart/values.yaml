@@ -1,4 +1,4 @@
-deployment:
+main:
   image:
     repository: ghcr.io/dramatikman/mlhl-gradwork-server
     tag: latest
