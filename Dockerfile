@@ -30,9 +30,9 @@ RUN poetry install --only-root
 
 ##################
 FROM base AS final
-RUN chown -R $UID:0 /app && chmod -R g+wx /app
 ENV PATH="/app/.venv/bin:/app:$PATH"
 COPY --from=builder /app/.venv /app/.venv
 COPY gwserver gwserver
+RUN chown -R $UID:0 /app && chmod -R g+wx /app
 USER $UID
 CMD gwserver start api
