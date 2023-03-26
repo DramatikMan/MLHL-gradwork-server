@@ -14,6 +14,14 @@ main:
       hosts:
         - gw.sergeypavlov.dev
 
+  initContainers:
+    - name: init-database
+      image:
+        repository: ghcr.io/dramatikman/mlhl-gradwork-server
+        tag: latest
+      command: ["gwserver"]
+      args: ["init", "database"]
+
 postgresql:
   fullNameOverride: gwserver-postgresql
   auth:

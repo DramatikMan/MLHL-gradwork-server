@@ -96,6 +96,7 @@ jobs:
               --install \
               --atomic \
               --set 'main.image.tag=${{ github.sha }}' \
+              --set 'main.initContainers[0].image.tag=${{ github.sha }}' \
               --set-json 'main.secrets=${{ secrets.SECRETS }}' \
               gwserver ${{ github.event.repository.name }}/chart
 
