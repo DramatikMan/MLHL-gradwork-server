@@ -88,7 +88,6 @@ jobs:
           key: ${{ secrets.KEY }}
           script_stop: true
           script: |
-            helm repo add https://dramatikman.github.io/charts
             helm dependency build ${{ github.event.repository.name }}/chart
             export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
