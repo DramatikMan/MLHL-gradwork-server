@@ -22,6 +22,13 @@ main:
       command: ["gwserver"]
       args: ["init", "database"]
 
+  persistentVolumes:
+    - name: model
+      mountPath: /tmp/model
+      volumeClaim:
+        size: 100Mi
+        accessMode: ReadWriteMany
+
 postgresql:
   fullNameOverride: gwserver-postgresql
   auth:
