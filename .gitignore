@@ -2,6 +2,9 @@
 *.env
 *.json
 
+### ~ Docker ~ ###
+*.yml
+
 ### ~ Python ~ ###
 __pycache__
 
