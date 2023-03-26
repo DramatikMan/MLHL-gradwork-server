@@ -7,7 +7,7 @@ appVersion: "1.0.0"
 dependencies:
   - name: k3s-deployment
     repository: "https://dramatikman.github.io/charts"
-    version: "0.1.2"
+    version: "0.1.4"
     alias: deployment
   - name: postgresql
     repository: "https://charts.bitnami.com/bitnami"

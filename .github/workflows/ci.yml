@@ -96,6 +96,7 @@ jobs:
               --install \
               --atomic \
               --set 'deployment.image.tag=${{ github.sha }}' \
+              --set-json 'deployment.secrets=${{ secrets.SECRETS }}' \
               gwserver ${{ github.event.repository.name }}/chart
 
       - name: Clean up artifacts
