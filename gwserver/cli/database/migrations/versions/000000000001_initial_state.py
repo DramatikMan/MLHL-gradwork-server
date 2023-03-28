@@ -1,6 +1,6 @@
 """Add initial state
 
-Revision ID: c8f2b7fa3eff
+Revision ID: 000000000001
 Revises:
 Create Date: 2023-02-08 16:43:16.994527
 
@@ -9,10 +9,11 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.schema import CreateSequence, DropSequence, Sequence
 
+from gwserver.cli.database.migrations.versions.constant import RGB, RYB
 from gwserver.core.database import Base
 
 # revision identifiers, used by Alembic.
-revision = "c8f2b7fa3eff"
+revision = "000000000001"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,6 +41,10 @@ def upgrade() -> None:
         sa.Column("uid", sa.Integer(), server_default=sa.text("nextval('\"IMAGE_uid_seq\"')"), nullable=False),
         sa.Column("path", sa.String(), nullable=False),
         sa.Column("category_uid", sa.Integer(), nullable=True),
+        sa.Column("color_rgb", sa.String(), nullable=True),
+        sa.Column("color_ryb", sa.String(), nullable=True),
+        sa.CheckConstraint(f"""color_rgb in ('{"', '".join(RGB.keys())}')"""),
+        sa.CheckConstraint(f"""color_ryb in ('{"', '".join(RYB.keys())}')"""),
         sa.ForeignKeyConstraint(["category_uid"], ["CATEGORY.uid"]),
         sa.PrimaryKeyConstraint("uid"),
         sa.UniqueConstraint("path"),

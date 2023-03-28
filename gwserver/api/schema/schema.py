@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, ConstrainedInt
 
-from gwserver import typings
+from gwserver import typings as t
 
 
 class UID(ConstrainedInt):
@@ -12,9 +12,9 @@ class UID(ConstrainedInt):
 class IMAGE(BaseModel):
     uid: UID
     path: str
-    category: Optional[typings.CATEGORY]
+    category: Optional[t.CATEGORY]
 
 
 class CATEGORY(BaseModel):
     uid: UID
-    title: typings.CATEGORY
+    title: t.CATEGORY

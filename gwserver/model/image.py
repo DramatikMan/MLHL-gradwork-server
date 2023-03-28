@@ -1,31 +1,24 @@
 from typing import Optional
 
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.schema import Sequence
 
-from gwserver import typings
+from gwserver import typings as t
 from gwserver.core.database import Base
 
-CategorySequence = Sequence("CATEGORY_uid_seq", start=1, metadata=Base.metadata)
+from .category import Category
+from .constant import RGB, RYB
+
 ImageSequence = Sequence("IMAGE_uid_seq", start=1, metadata=Base.metadata)
-
-
-class Category(Base):
-    __tablename__ = "CATEGORY"
-
-    uid: Mapped[int] = mapped_column(
-        Integer,
-        CategorySequence,
-        primary_key=True,
-        server_default=CategorySequence.next_value(),
-    )
-
-    title: Mapped[typings.CATEGORY] = mapped_column(String, nullable=False, unique=True)
 
 
 class Image(Base):
     __tablename__ = "IMAGE"
+    __table_args__ = (
+        CheckConstraint(f"""color_rgb in ('{"', '".join(RGB.keys())}')"""),
+        CheckConstraint(f"""color_ryb in ('{"', '".join(RYB.keys())}')"""),
+    )
 
     uid: Mapped[int] = mapped_column(
         Integer,
@@ -35,5 +28,9 @@ class Image(Base):
     )
 
     path: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+
     category_uid: Mapped[Optional[int]] = mapped_column(ForeignKey(Category.uid))
     category: Mapped["Category"] = relationship()
+
+    color_rgb: Mapped[Optional[t.COLOR_RGB]] = mapped_column(String)
+    color_ryb: Mapped[Optional[t.COLOR_RYB]] = mapped_column(String)
