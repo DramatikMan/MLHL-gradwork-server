@@ -22,10 +22,14 @@ class Controller(s.Controller):
         if record is None:
             raise s.HTTPException(detail="Image not found by UID.", status_code=404)
 
-        return IMAGE(
-            uid=UID(record.uid),
-            path=record.path,
-            category=record.category.title,
+        return IMAGE.parse_obj(
+            {
+                "uid": record.uid,
+                "path": record.path,
+                "category": record.category.title,
+                "color_RGB": record.color_rgb,
+                "color_RYB": record.color_ryb,
+            }
         )
 
     @s.post(content_media_type="image/jpeg", dependencies={"db": s.Provide(DB)})
@@ -70,8 +74,12 @@ class Controller(s.Controller):
 
         dramatiq.group(parallel).run()  # type: ignore[no-untyped-call]
 
-        return IMAGE(
-            uid=UID(record.uid),
-            path=record.path,
-            category=None,
+        return IMAGE.parse_obj(
+            {
+                "uid": record.uid,
+                "path": record.path,
+                "category": record.category.title,
+                "color_RGB": record.color_rgb,
+                "color_RYB": record.color_ryb,
+            }
         )
