@@ -78,8 +78,5 @@ class Controller(s.Controller):
             {
                 "uid": record.uid,
                 "path": record.path,
-                "category": record.category.title,
-                "color_RGB": record.color_rgb,
-                "color_RYB": record.color_ryb,
             }
         )
