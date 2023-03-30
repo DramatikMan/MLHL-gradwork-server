@@ -16,6 +16,9 @@ main:
     - secretName: tls.sergeypavlov.dev
       hosts:
         - gw.sergeypavlov.dev
+    
+  envVars:
+    - secret: gwserver-main
 
   initContainers:
     - name: init
