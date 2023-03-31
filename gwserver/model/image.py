@@ -15,6 +15,7 @@ ImageSequence = Sequence("IMAGE_uid_seq", start=1, metadata=Base.metadata)
 
 class Image(Base):
     __tablename__ = "IMAGE"
+
     __table_args__ = (
         CheckConstraint(f"""color_rgb in ('{"', '".join(RGB.keys())}')"""),
         CheckConstraint(f"""color_ryb in ('{"', '".join(RYB.keys())}')"""),
@@ -30,7 +31,7 @@ class Image(Base):
     path: Mapped[str] = mapped_column(String, nullable=False, unique=True)
 
     category_uid: Mapped[Optional[int]] = mapped_column(ForeignKey(Category.uid))
-    category: Mapped["Category"] = relationship()
+    category: Mapped["Category"] = relationship(lazy=False)
 
     color_rgb: Mapped[Optional[t.COLOR_RGB]] = mapped_column(String)
     color_ryb: Mapped[Optional[t.COLOR_RYB]] = mapped_column(String)

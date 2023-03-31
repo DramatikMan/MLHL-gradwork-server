@@ -26,7 +26,7 @@ class Controller(s.Controller):
             {
                 "uid": record.uid,
                 "path": record.path,
-                "category": record.category.title,
+                "category": getattr(record.category, "title", None),
                 "color_RGB": record.color_rgb,
                 "color_RYB": record.color_ryb,
             }
@@ -58,14 +58,16 @@ class Controller(s.Controller):
         path = f"{config.S3_USER_DATA_SUBPATH}/{count + 1}.jpg"
         record = Mapper(path=path)
 
+        if image.size[0] != 224:
+            buffer = io.BytesIO()
+            image.resize((224, 224)).save(buffer, format="JPEG")
+            buffer.seek(0)
+            content = buffer.read()
+
+        content_string = base64.b64encode(content).decode()
         db.add(record)
         db.commit()
         db.refresh(record)
-
-        if image.size[0] != 224:
-            content = image.resize((224, 224)).tobytes()
-
-        content_string = base64.b64encode(content).decode()
 
         parallel = (
             tasks.upload.message(path, content_string),
