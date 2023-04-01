@@ -1,9 +1,6 @@
 import base64
 import io
-import logging
-from collections import Counter
 from pathlib import Path
-from typing import Any
 
 import numpy as np
 import onnxruntime as ort
@@ -13,28 +10,27 @@ from PIL import Image
 from gwserver.core import config
 from gwserver.core.database import DB
 from gwserver.model import Image as Mapper
-from gwserver.model.constant import RGB, RYB
+from gwserver.model.constant import RGBt, RYBt
 
 
-def get_distance(p1: tuple[int, int, int], p2: tuple[int, int, int]) -> float:
-    return float(((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2 + (p1[2] - p2[2]) ** 2) ** 0.5)
+def get_dominant_color(colors: dict[str, np.ndarray], image: np.ndarray) -> str:
+    dominant_color, min_distance = "#FFFFFF", float("+inf")
 
+    for key, value in colors.items():
+        score = np.mean(
+            np.sqrt(
+                np.sum(
+                    np.square(np.subtract(image, value)),
+                    axis=2,
+                )
+            )
+        )
 
-def get_dominant_color(mapping: dict[str, tuple[int, int, int]], px: Any) -> str:
-    colors: list[str] = []
+        if score < min_distance:
+            min_distance = score
+            dominant_color = key
 
-    for x in range(299):
-        for y in range(299):
-            dominant_color, min_distance = "#FFFFFF", float("+inf")
-
-            for key, color in mapping.items():
-                if (distance := get_distance(color, px[x, y])) < min_distance:
-                    min_distance = distance
-                    dominant_color = key
-
-            colors.append(dominant_color)
-
-    return Counter(colors).most_common()[0][0]
+    return dominant_color
 
 
 def predict(uid: int, content: str) -> None:
@@ -42,30 +38,31 @@ def predict(uid: int, content: str) -> None:
     inference = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
 
     binary = base64.b64decode(content.encode("utf-8"))
-    image = Image.open(io.BytesIO(binary), formats=("JPEG",)).resize((299, 299))
-    array = np.expand_dims(np.moveaxis(np.asarray(image).astype(np.float32), -1, 0), axis=0)
-    array /= 255.0
+    image = Image.open(io.BytesIO(binary), formats=("JPEG",))
+    array = np.asanyarray(image)
 
-    outputs = inference.run(None, {"input": array})
+    inp = np.expand_dims(
+        np.moveaxis(np.asarray(image.resize((299, 299))).astype(np.float32), -1, 0),
+        axis=0,
+    )
+
+    outputs = inference.run(None, {"input": inp / 255.0})
     prediction = int(outputs[0][0].argmax(0)) + 1
 
-    db, pixel_access = DB.make_session(), image.load()
-
     try:
+        db = DB.make_session()
+
         stmt = (
             sa.update(Mapper)
             .where(Mapper.uid == uid)
             .values(
                 category_uid=prediction,
-                color_rgb=get_dominant_color(RGB, pixel_access),
-                color_ryb=get_dominant_color(RYB, pixel_access),
+                color_rgb=get_dominant_color(RGBt, array),
+                color_ryb=get_dominant_color(RYBt, array),
             )
         )
 
         db.execute(stmt)
         db.commit()
-    except Exception as e:
-        logging.exception(f"Failed to classify image [uid = {uid}]:\n{e}")
-        raise
     finally:
         db.close()

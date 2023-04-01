@@ -10,7 +10,7 @@ class UID(ConstrainedInt):
 
 
 class IMAGE(BaseModel):
-    uid: UID
+    uid: int
     path: str
     category: Optional[t.CATEGORY]
     color_RGB: Optional[t.COLOR_RGB]
@@ -18,5 +18,5 @@ class IMAGE(BaseModel):
 
 
 class CATEGORY(BaseModel):
-    uid: UID
+    uid: int
     title: t.CATEGORY
