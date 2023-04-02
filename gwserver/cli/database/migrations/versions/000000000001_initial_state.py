@@ -1,4 +1,4 @@
-"""Add initial state
+"""Add initial schema state
 
 Revision ID: 000000000001
 Revises:

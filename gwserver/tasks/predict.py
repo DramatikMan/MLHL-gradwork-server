@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 import sqlalchemy as sa
+from numpy.typing import NDArray
 from PIL import Image
 
 from gwserver.core import config
@@ -13,7 +14,10 @@ from gwserver.model import Image as Mapper
 from gwserver.model.constant import RGBt, RYBt
 
 
-def get_dominant_color(colors: dict[str, np.ndarray], image: np.ndarray) -> str:
+def get_dominant_color(
+    colors: dict[str, NDArray[np.uint8]],
+    image: NDArray[np.uint8],
+) -> str:
     dominant_color, min_distance = "#FFFFFF", float("+inf")
 
     for key, value in colors.items():

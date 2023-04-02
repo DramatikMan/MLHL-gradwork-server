@@ -5,7 +5,6 @@ import dramatiq
 import sqlalchemy as sa
 import starlite as s
 from PIL import Image
-from starlite import status_codes
 
 from gwserver import tasks
 from gwserver.api.schema import IMAGE, UID
@@ -26,7 +25,7 @@ class Controller(s.Controller):
             {
                 "uid": record.uid,
                 "path": record.path,
-                "category": getattr(record.category, "title", None),
+                "category": vars(record.category) if record.category is not None else None,
                 "color_RGB": record.color_rgb,
                 "color_RYB": record.color_ryb,
             }
@@ -52,7 +51,7 @@ class Controller(s.Controller):
         if count is None:
             raise s.HTTPException(
                 detail='Current image count returned "None".',
-                status_code=status_codes.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=500,
             )
 
         path = f"{config.S3_USER_DATA_SUBPATH}/{count + 1}.jpg"
