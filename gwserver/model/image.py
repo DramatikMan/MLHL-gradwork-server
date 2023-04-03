@@ -4,7 +4,7 @@ from sqlalchemy import CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.schema import Sequence
 
-from gwserver import typings as t
+import color_utils.typings as color
 from gwserver.core.database import Base
 
 from .category import Category
@@ -33,5 +33,5 @@ class Image(Base):
     category_uid: Mapped[Optional[int]] = mapped_column(ForeignKey(Category.uid))
     category: Mapped["Category"] = relationship(lazy=False)
 
-    color_rgb: Mapped[Optional[t.COLOR_RGB]] = mapped_column(String)
-    color_ryb: Mapped[Optional[t.COLOR_RYB]] = mapped_column(String)
+    color_rgb: Mapped[Optional[color.COLOR_RGB]] = mapped_column(String)
+    color_ryb: Mapped[Optional[color.COLOR_RYB]] = mapped_column(String)

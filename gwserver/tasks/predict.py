@@ -5,36 +5,12 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 import sqlalchemy as sa
-from numpy.typing import NDArray
+from color_utils import RGB, RYB
 from PIL import Image
 
 from gwserver.core import config
 from gwserver.core.database import DB
 from gwserver.model import Image as Mapper
-from gwserver.model.constant import RGBt, RYBt
-
-
-def get_dominant_color(
-    colors: dict[str, NDArray[np.uint8]],
-    image: NDArray[np.uint8],
-) -> str:
-    dominant_color, min_distance = "#FFFFFF", float("+inf")
-
-    for key, value in colors.items():
-        score = np.mean(
-            np.sqrt(
-                np.sum(
-                    np.square(np.subtract(image, value)),
-                    axis=2,
-                )
-            )
-        )
-
-        if score < min_distance:
-            min_distance = score
-            dominant_color = key
-
-    return dominant_color
 
 
 def predict(uid: int, content: str) -> None:
@@ -61,8 +37,8 @@ def predict(uid: int, content: str) -> None:
             .where(Mapper.uid == uid)
             .values(
                 category_uid=prediction,
-                color_rgb=get_dominant_color(RGBt, array),
-                color_ryb=get_dominant_color(RYBt, array),
+                color_rgb=RGB.get_dominant_color(array),
+                color_ryb=RYB.get_dominant_color(array),
             )
         )
 

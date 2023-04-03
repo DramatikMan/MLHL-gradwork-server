@@ -1,47 +1,61 @@
-[tool.poetry]
+[[tool.pdm.source]]
+name = "gitlab"
+url = "https://gitlab.com/api/v4/projects/44844627/packages/pypi/simple"
+
+[[tool.pdm.source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[tool.pdm.resolution]
+respect-source-order = true
+
+[project]
 name = "gwserver"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
-authors = ["Sergey Pavlov <self@sergeypavlov.dev>"]
+authors = [{name = "Sergey Pavlov", email = "self@sergeypavlov.dev"}]
+requires-python = ">=3.10"
+dependencies = [
+    "starlite>=1.51.9",
+    "pydantic>=1.10.7",
+    "typer>=0.7.0",
+    "uvicorn[standard]>=0.21.1",
+    "gunicorn>=20.1.0",
+    "alembic>=1.10.2",
+    "sqlalchemy>=2.0.8",
+    "psycopg2>=2.9.6",
+    "boto3>=1.26.104",
+    "pandas>=2.0.0",
+    "pillow>=9.5.0",
+    "onnxruntime-gpu>=1.14.1",
+    "numpy>=1.24.2",
+    "dramatiq[rabbitmq,watch]>=1.14.2",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10"
-starlite = "^1.51.7"
-pydantic = "^1.10.6"
-typer = "^0.7.0"
-uvicorn = {version = "^0.21.0", extras = ["standard"]}
-gunicorn = "^20.1.0"
-dramatiq = {version = "^1.14.1", extras = ["rabbitmq", "watch"]}
-alembic = "^1.10.2"
-sqlalchemy = "^2.0.6"
-psycopg2 = "^2.9.5"
-boto3 = "^1.26.89"
-pandas = "^1.5.3"
-pillow = "^9.4.0"
-onnxruntime-gpu = "^1.14.1"
-numpy = "^1.24.2"
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.3.0",
+    "mypy>=1.1.1",
+    "ruff>=0.0.260",
+]
 
-[tool.poetry.group.dev.dependencies]
-autoflake = "^2.0.2"
-black = "^23.1.0"
-flake8 = "^6.0.0"
-flake8-bugbear = "^23.3.12"
-isort = "^5.12.0"
-mypy = "^1.1.1"
+[project.scripts]
+gwserver = "gwserver.cli:entrypoint"
 
-[tool.isort]
-multi_line_output = 3
-profile = "black"
-skip_glob = ["*/migrations/*", "*.pyx"]
+[tool.pdm.scripts]
+devserver = "uvicorn gwserver.api:app --reload --host 0.0.0.0 --port 8080"
+lint = {composite = ["black gwserver", "ruff --fix gwserver", "mypy --strict gwserver"]}
+
+[tool.black]
+line-length = 100
+quiet = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
 
 [tool.mypy]
 exclude = "migrations|tasks"
 ignore_missing_imports = true
 show_error_codes = true
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-gwserver = "gwserver.cli:entrypoint"

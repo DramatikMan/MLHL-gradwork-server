@@ -14,19 +14,16 @@ RUN addgroup --system --gid $GID drm \
 FROM base AS builder
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    POETRY_VERSION=1.4.1
+    PIP_NO_CACHE_DIR=1
 
-RUN pip install "poetry==$POETRY_VERSION" \
-    && poetry config virtualenvs.in-project true \
-    && mkdir .venv
+RUN pip install "pdm==2.4.9" \
+    && pdm config check_update false \
+    && pdm config venv.in_project true
 
-COPY pyproject.toml poetry.lock* ./
+COPY pyproject.toml pdm.lock* ./
 ARG build_env
-RUN bash -c 'if [[ "$build_env" == "dev" ]]; then poetry install; else poetry install --only main; fi'
-COPY .flake8 Makefile ./
+RUN bash -c 'if [[ "$build_env" == "dev" ]]; then pdm install; else pdm install --prod; fi'
 COPY gwserver gwserver
-RUN poetry install --only-root
 
 ##################
 FROM base AS final
