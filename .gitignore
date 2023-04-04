@@ -1,16 +1,15 @@
 ### ~ private ~ ###
-*.env
-*.json
+/*.env
+/*.json
 
 ### ~ Docker ~ ###
-*.yml
+/*.y*ml
 
 ### ~ Python ~ ###
 __pycache__
 
 ### ~ development ~ ###
-dev*
-scripts
+/scripts
 
 ### ~ Helm ~ ###
-chart/**/*.tgz
+/chart/**/*.tgz
