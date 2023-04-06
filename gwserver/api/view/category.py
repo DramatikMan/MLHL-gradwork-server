@@ -1,12 +1,13 @@
 import sqlalchemy as sa
 import starlite as s
 
-from gwserver.api.schema import CATEGORY, UID
 from gwserver.core.database import DB
 from gwserver.model import Category as Mapper
+from gwserver.schema.request import UID
+from gwserver.schema.response import CATEGORY
 
 
-class Controller(s.Controller):
+class View(s.Controller):
     @s.get(dependencies={"db": s.Provide(DB)})
     async def list_category(self, db: sa.orm.Session) -> list[CATEGORY]:
         stmt = sa.select(Mapper)

@@ -7,13 +7,14 @@ import starlite as s
 from PIL import Image
 
 from gwserver import tasks
-from gwserver.api.schema import IMAGE, UID
 from gwserver.core import config
 from gwserver.core.database import DB
 from gwserver.model import Image as Mapper
+from gwserver.schema.request import UID
+from gwserver.schema.response import IMAGE
 
 
-class Controller(s.Controller):
+class View(s.Controller):
     @s.get(path="{uid:int}", dependencies={"db": s.Provide(DB)})
     async def get_image(self, uid: UID, db: sa.orm.Session) -> IMAGE:
         record: Mapper | None = db.get(Mapper, uid)

@@ -3,7 +3,7 @@ from starlite.config.cors import CORSConfig
 
 from gwserver.core import config
 
-from . import controller
+from . import view
 
 app = Starlite(
     cors_config=CORSConfig(),
@@ -14,12 +14,12 @@ app = Starlite(
     route_handlers=[
         Router(
             path=f"{config.API_ROOT_PATH}/image",
-            route_handlers=[controller.Image],
+            route_handlers=[view.Image],
             tags=["Image"],
         ),
         Router(
             path=f"{config.API_ROOT_PATH}/category",
-            route_handlers=[controller.Category],
+            route_handlers=[view.Category],
             tags=["Category"],
         ),
     ],
