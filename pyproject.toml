@@ -22,24 +22,24 @@ dependencies = [
     "typer>=0.7.0",
     "uvicorn[standard]>=0.21.1",
     "gunicorn>=20.1.0",
-    "alembic>=1.10.2",
-    "sqlalchemy>=2.0.8",
+    "alembic>=1.10.3",
+    "sqlalchemy>=2.0.9",
     "psycopg2>=2.9.6",
-    "boto3>=1.26.104",
+    "boto3>=1.26.108",
     "pandas>=2.0.0",
     "pillow>=9.5.0",
     "onnxruntime-gpu>=1.14.1",
     "numpy>=1.24.2",
     "dramatiq[rabbitmq,watch]>=1.14.2",
-    "color-utils>=1.0.0",
+    "color-utils>=1.0.1",
 ]
 
 [tool.pdm.dev-dependencies]
 dev = [
     "black>=23.3.0",
     "isort>=5.12.0",
-    "mypy>=1.1.1",
-    "ruff>=0.0.260",
+    "mypy>=1.2.0",
+    "ruff>=0.0.261",
 ]
 
 [project.scripts]
