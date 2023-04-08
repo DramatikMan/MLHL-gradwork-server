@@ -1,6 +1,6 @@
 import logging
 
-from . import api, cli, core, model, tasks
+from . import api, cli, core, interface, model, schema, tasks, utility
 
 logging.basicConfig(
     level=logging.INFO,
@@ -12,6 +12,9 @@ __all__ = (
     "api",
     "cli",
     "core",
+    "interface",
     "model",
+    "schema",
     "tasks",
+    "utility",
 )

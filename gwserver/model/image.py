@@ -1,5 +1,3 @@
-from typing import Optional
-
 from color_utils.constant import RGB, RYB
 from color_utils.typings import COLOR_RGB, COLOR_RYB
 from sqlalchemy import CheckConstraint, ForeignKey, Integer, String
@@ -30,8 +28,8 @@ class Image(Base):
 
     path: Mapped[str] = mapped_column(String, nullable=False, unique=True)
 
-    category_uid: Mapped[Optional[int]] = mapped_column(ForeignKey(Category.uid))
+    category_uid: Mapped[int | None] = mapped_column(ForeignKey(Category.uid))
     category: Mapped["Category"] = relationship(lazy=False)
 
-    color_rgb: Mapped[Optional[COLOR_RGB]] = mapped_column(String)
-    color_ryb: Mapped[Optional[COLOR_RYB]] = mapped_column(String)
+    color_rgb: Mapped[COLOR_RGB | None] = mapped_column(String)
+    color_ryb: Mapped[COLOR_RYB | None] = mapped_column(String)

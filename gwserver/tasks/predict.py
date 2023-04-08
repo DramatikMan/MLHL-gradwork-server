@@ -6,7 +6,7 @@ import numpy as np
 import onnxruntime as ort
 import sqlalchemy as sa
 from color_utils import RGB, RYB
-from PIL import Image
+from PIL import Image as PIL
 
 from gwserver.core import config
 from gwserver.core.database import DB
@@ -18,7 +18,7 @@ def predict(uid: int, content: str) -> None:
     inference = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
 
     binary = base64.b64decode(content.encode("utf-8"))
-    image = Image.open(io.BytesIO(binary), formats=("JPEG",))
+    image = PIL.open(io.BytesIO(binary), formats=("JPEG",))
     array = np.asanyarray(image)
 
     inp = np.expand_dims(

@@ -2,7 +2,6 @@ from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.schema import Sequence
 
-from gwserver import typings as t
 from gwserver.core.database import Base
 
 CategorySequence = Sequence("CATEGORY_uid_seq", start=1, metadata=Base.metadata)
@@ -18,4 +17,4 @@ class Category(Base):
         server_default=CategorySequence.next_value(),
     )
 
-    title: Mapped[t.CATEGORY] = mapped_column(String, nullable=False, unique=True)
+    title: Mapped[str] = mapped_column(String, nullable=False, unique=True)
