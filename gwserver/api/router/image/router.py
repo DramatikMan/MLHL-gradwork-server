@@ -4,7 +4,7 @@ from gwserver.api.base.router import Base as Router
 from gwserver.core import config
 from gwserver.interface import image as interface
 
-from . import handler
+from .handler import post_image
 
 router = Router(
     interface=interface,
@@ -12,4 +12,9 @@ router = Router(
     tags=("Image",),
 )
 
-router.register(post(content_media_type="image/jpeg")(handler.post_image))
+router.register(
+    post(
+        content_media_type="image/jpeg",
+        responses=post_image.ImageOpenFailure.response | post_image.ImageNotSquare.response,
+    )(post_image.handler)
+)

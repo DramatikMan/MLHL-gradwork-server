@@ -1,8 +1,29 @@
-from litestar import Litestar
+from typing import Any, TypedDict
+
+from litestar import Litestar, Response, status_codes
 from litestar.config.cors import CORSConfig
+from litestar.exceptions import HTTPException
 from litestar.openapi import OpenAPIConfig
 
 from . import router
+
+
+class APIException(TypedDict):
+    detail: str
+
+
+def exception_handler(_: Any, ex: Exception) -> Response[APIException]:
+    if isinstance(ex, HTTPException):
+        return Response(
+            content=APIException(detail=ex.detail),
+            status_code=ex.status_code,
+        )
+
+    return Response(
+        content=APIException(detail=str(ex)),
+        status_code=status_codes.HTTP_500_INTERNAL_SERVER_ERROR,
+    )
+
 
 app = Litestar(
     cors_config=CORSConfig(),
@@ -11,4 +32,7 @@ app = Litestar(
         router.image,
         router.category,
     ],
+    exception_handlers={
+        Exception: exception_handler,
+    },
 )
