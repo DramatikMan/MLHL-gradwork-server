@@ -38,18 +38,18 @@ dependencies = [
 
 [[package]]
 name = "boto3"
-version = "1.26.109"
+version = "1.26.110"
 requires_python = ">= 3.7"
 summary = "The AWS SDK for Python"
 dependencies = [
-    "botocore<1.30.0,>=1.29.109",
+    "botocore<1.30.0,>=1.29.110",
     "jmespath<2.0.0,>=0.7.1",
     "s3transfer<0.7.0,>=0.6.0",
 ]
 
 [[package]]
 name = "botocore"
-version = "1.29.109"
+version = "1.29.110"
 requires_python = ">= 3.7"
 summary = "Low-level, data-driven core of boto 3."
 dependencies = [
@@ -252,7 +252,7 @@ summary = "JSON Matching Expressions"
 
 [[package]]
 name = "litestar"
-version = "2.0.0a3"
+version = "2.0.0a4"
 requires_python = ">=3.8,<4.0"
 summary = "Performant, light and flexible ASGI API Framework"
 dependencies = [
@@ -262,7 +262,7 @@ dependencies = [
     "mako>=1.2.4",
     "msgspec",
     "multidict>=6.0.2",
-    "polyfactory",
+    "polyfactory>=2.0.0a1",
     "pydantic<2",
     "pyyaml",
     "typing-extensions",
@@ -387,9 +387,9 @@ summary = "plugin and hook calling mechanisms for python"
 
 [[package]]
 name = "polyfactory"
-version = "1.0.0a0"
+version = "2.0.0a1"
 requires_python = ">=3.8,<4.0"
-summary = "Mock data generation for pydantic based models and python dataclasses"
+summary = "Mock data generation factories"
 dependencies = [
     "faker",
     "typing-extensions",
@@ -694,13 +694,13 @@ content_hash = "sha256:f93f493270573ca79ea66216b0cda5e1e75288d376b4545fd214a52f3
     {url = "https://files.pythonhosted.org/packages/eb/a5/17b40bfd9b607b69fa726b0b3a473d14b093dcd5191ea1a1dd664eccfee3/black-23.3.0-cp311-cp311-macosx_10_16_universal2.whl", hash = "sha256:c7ab5790333c448903c4b721b59c0d80b11fe5e9803d8703e84dcb8da56fec1b"},
     {url = "https://files.pythonhosted.org/packages/fd/5b/fc2d7922c1a6bb49458d424b5be71d251f2d0dc97be9534e35d171bdc653/black-23.3.0-cp39-cp39-macosx_10_16_universal2.whl", hash = "sha256:f0bd2f4a58d6666500542b26354978218a9babcdc972722f4bf90779524515f3"},
 ]
-"boto3 1.26.109" = [
-    {url = "https://files.pythonhosted.org/packages/27/cb/86d83c450d1471e1bf6deee4b47be7228154306eab564568165908e30c11/boto3-1.26.109.tar.gz", hash = "sha256:d388cb7f54f1a3056f91ffcfb5cf18b226454204e5df7a5c10774718c3fbb166"},
-    {url = "https://files.pythonhosted.org/packages/dd/b7/d2767e43723b4cf2db45ed8c636c69be2563ed23c5a1e4741aff2d529a0e/boto3-1.26.109-py3-none-any.whl", hash = "sha256:a1c48674c2ff25ddced599c51d14ba7a6dbe9fd51641e8d63a6887bebd9712d7"},
+"boto3 1.26.110" = [
+    {url = "https://files.pythonhosted.org/packages/3a/4a/cb0a922eef8345ae4f5acb7f27902f0210613fa06e9e476c56179b9711f0/boto3-1.26.110.tar.gz", hash = "sha256:97d942d958cac28687187b89ee88ac760e0fa3007094cb1d6b16e241144306f3"},
+    {url = "https://files.pythonhosted.org/packages/3b/59/847419ded8c143bde89d7ef1fdeac4b34f78410461c24a9e4659f5c9f890/boto3-1.26.110-py3-none-any.whl", hash = "sha256:8972a5e0a04ea6f477c41e390765a46ec7bcffb62f99d4a0774ce70fb87bea59"},
 ]
-"botocore 1.29.109" = [
-    {url = "https://files.pythonhosted.org/packages/32/7b/7d139b04f4c9554e6fdd25ad22ed91376f3b6433cf329a78cf0a23f75211/botocore-1.29.109.tar.gz", hash = "sha256:2e449525f0ccedb31fdb962a77caac48b4c486c23515b84c5989a39a1823a024"},
-    {url = "https://files.pythonhosted.org/packages/9f/9b/2c3fa91b4750b8e78211d07788445667e8c24f4a19f38c2fc099e75f282a/botocore-1.29.109-py3-none-any.whl", hash = "sha256:cf43dddb7e2ba5425fe19fad68b10043307b61d9103d06566f1ab6034e38b8db"},
+"botocore 1.29.110" = [
+    {url = "https://files.pythonhosted.org/packages/8b/79/2c117bfe202c2d7d85b0e8feab358488f8a7fba71d4507f6313d5d37fde8/botocore-1.29.110-py3-none-any.whl", hash = "sha256:39879fcc3d263513f9ba92cc5060b5a4dbe54f758a917be29c7a71132e34f399"},
+    {url = "https://files.pythonhosted.org/packages/d1/39/120331cd4b1e1bb4ff615bd417a9063a183734fa0974014f57009de4a318/botocore-1.29.110.tar.gz", hash = "sha256:9d5054159782b19f27bff3e5a65bc494dc323255e889ea3abec002711a1fb0c0"},
 ]
 "certifi 2022.12.7" = [
     {url = "https://files.pythonhosted.org/packages/37/f7/2b1b0ec44fdc30a3d31dfebe52226be9ddc40cd6c0f34ffc8923ba423b69/certifi-2022.12.7.tar.gz", hash = "sha256:35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"},
@@ -1017,9 +1017,9 @@ content_hash = "sha256:f93f493270573ca79ea66216b0cda5e1e75288d376b4545fd214a52f3
     {url = "https://files.pythonhosted.org/packages/00/2a/e867e8531cf3e36b41201936b7fa7ba7b5702dbef42922193f05c8976cd6/jmespath-1.0.1.tar.gz", hash = "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"},
     {url = "https://files.pythonhosted.org/packages/31/b4/b9b800c45527aadd64d5b442f9b932b00648617eb5d63d2c7a6587b7cafc/jmespath-1.0.1-py3-none-any.whl", hash = "sha256:02e2e4cc71b5bcab88332eebf907519190dd9e6e82107fa7f83b1003a6252980"},
 ]
-"litestar 2.0.0a3" = [
-    {url = "https://files.pythonhosted.org/packages/0a/c7/de3e2d498c5a2e836b98c3e0ecc08f3edd7057d7e8b180e64a1625d559f2/litestar-2.0.0a3-py3-none-any.whl", hash = "sha256:b819a8972096fba01e00410dd5baff278ad01526e1783aca2ea97ee009ce3c95"},
-    {url = "https://files.pythonhosted.org/packages/fb/f3/0ee3c15ad537d7b1ceea0785b374f9e41dbe43cfba0267949db99bd98114/litestar-2.0.0a3.tar.gz", hash = "sha256:8658ef47d5f411c257cf962f7a76ca46066e85083e0a5aef9990550bd06e8b87"},
+"litestar 2.0.0a4" = [
+    {url = "https://files.pythonhosted.org/packages/67/98/aac367a52f4254591e4b3e2fbd1a6c857cc052a47f7083757f44d28c1803/litestar-2.0.0a4-py3-none-any.whl", hash = "sha256:cf6dfeeae170329005c62ab6a5cbdff6ffafe0f9528caf4f201fd93571e7e63b"},
+    {url = "https://files.pythonhosted.org/packages/e3/d2/b6153beff91acc9441cd0fbabd32b1ce3f06900072da093393ec444d1046/litestar-2.0.0a4.tar.gz", hash = "sha256:5bf9533e2233244d0001d95e941138db6712a787c52185161ea814db5077ac02"},
 ]
 "mako 1.2.4" = [
     {url = "https://files.pythonhosted.org/packages/03/3b/68690a035ba7347860f1b8c0cde853230ba69ff41df5884ea7d89fe68cd3/Mako-1.2.4-py3-none-any.whl", hash = "sha256:c97c79c018b9165ac9922ae4f32da095ffd3c4e6872b45eded42926deea46818"},
@@ -1375,9 +1375,9 @@ content_hash = "sha256:f93f493270573ca79ea66216b0cda5e1e75288d376b4545fd214a52f3
     {url = "https://files.pythonhosted.org/packages/9e/01/f38e2ff29715251cf25532b9082a1589ab7e4f571ced434f98d0139336dc/pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {url = "https://files.pythonhosted.org/packages/a1/16/db2d7de3474b6e37cbb9c008965ee63835bba517e22cdb8c35b5116b5ce1/pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
-"polyfactory 1.0.0a0" = [
-    {url = "https://files.pythonhosted.org/packages/1a/c9/23406e52721fd24cdef67b638e1512807b6efd72a1b32bc698af314a8a76/polyfactory-1.0.0a0.tar.gz", hash = "sha256:2e4e698307b2f568c0e14ec6bb64affdfae8387897ace55a8b75ef8c4a8053fd"},
-    {url = "https://files.pythonhosted.org/packages/e1/02/8c46d8869bc76dc53e9863edfb404653fb392c9a214c60a7110b1ddc0674/polyfactory-1.0.0a0-py3-none-any.whl", hash = "sha256:6faa6922bb96bea479c29a3cd55e73b07d15719a713ff46c36a12ed4cd9cbbdb"},
+"polyfactory 2.0.0a1" = [
+    {url = "https://files.pythonhosted.org/packages/5b/e0/395e5ccd88e1a31d6ab60b43d9174c4c434b1f5ecc3fb81c471183a2b7c3/polyfactory-2.0.0a1.tar.gz", hash = "sha256:888ab036778cb0d0707368c7bcfd89257317f08565efc00c32d6c55975d41f52"},
+    {url = "https://files.pythonhosted.org/packages/b3/e9/6967356c190ca77007ae053dc607c071e659fc68cf2647efb3d301778863/polyfactory-2.0.0a1-py3-none-any.whl", hash = "sha256:19312b27d78e63a4b16bfc39eecfa0e11783acfe106d3772c93738fcc1331002"},
 ]
 "prometheus-client 0.16.0" = [
     {url = "https://files.pythonhosted.org/packages/5b/8e/6a546e439b4366ab9eab0a736876eb1e1916dd93b4a1fa560ef711d24f8c/prometheus_client-0.16.0-py3-none-any.whl", hash = "sha256:0836af6eb2c8f4fed712b2f279f6c0a8bbab29f9f4aa15276b91c7cb0d1616ab"},
