@@ -13,5 +13,4 @@ def get_one(interface: Interface.Base[Mapper, ResponseOne]) -> HTTPRouteHandler:
         return interface.get(uid, session)
 
     handler.__annotations__["return"] = interface._response_schema_one
-
     return get(path="{uid:int}", responses=error.NotFoundByUID.response)(handler)

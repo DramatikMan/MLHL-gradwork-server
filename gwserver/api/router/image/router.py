@@ -1,5 +1,3 @@
-from litestar import post
-
 from gwserver.api.base.router import Base as Router
 from gwserver.core import config
 from gwserver.interface import image as interface
@@ -12,9 +10,4 @@ router = Router(
     tags=("Image",),
 )
 
-router.register(
-    post(
-        content_media_type="image/jpeg",
-        responses=post_image.ImageOpenFailure.response | post_image.ImageNotSquare.response,
-    )(post_image.handler)
-)
+router.register(post_image.handler)

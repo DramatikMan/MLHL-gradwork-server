@@ -3,7 +3,7 @@ import io
 
 import dramatiq
 import sqlalchemy as sa
-from litestar import status_codes
+from litestar import post, status_codes
 from litestar.datastructures import UploadFile
 from litestar.enums import RequestEncodingType
 from litestar.params import Body
@@ -21,6 +21,7 @@ ImageOpenFailure = DynamicAPIError(
     description="Failed to open the payload as a JPEG image",
 )
 
+
 ImageNotSquare = DynamicAPIError(
     name="ImageNotSquare",
     status_code=status_codes.HTTP_400_BAD_REQUEST,
@@ -28,6 +29,10 @@ ImageNotSquare = DynamicAPIError(
 )
 
 
+@post(
+    content_media_type="image/jpeg",
+    responses=ImageOpenFailure.response | ImageNotSquare.response,
+)
 async def handler(
     session: sa.orm.Session,
     data: UploadFile = Body(media_type=RequestEncodingType.MULTI_PART),
