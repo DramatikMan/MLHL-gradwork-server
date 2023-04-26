@@ -17,7 +17,7 @@ description = ""
 authors = [{name = "Sergey Pavlov", email = "self@sergeypavlov.dev"}]
 requires-python = ">=3.10"
 dependencies = [
-    "litestar>=2.0.0a3",
+    "litestar>=2.0.0a5",
     "pydantic>=1.10.7",
     "typer>=0.7.0",
     "uvicorn[standard]>=0.21.1",
