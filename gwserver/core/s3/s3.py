@@ -35,5 +35,14 @@ class S3:
     def upload(self, key: str, content: bytes) -> None:
         self.client.upload_fileobj(io.BytesIO(content), self.bucket, key)
 
+    def get_temp_link(self, key: str, expires_in: int = 3600) -> str:
+        link: str = self.client.generate_presigned_url(
+            "get_object",
+            Params={"Bucket": self.bucket, "Key": key},
+            ExpiresIn=expires_in,
+        )
+
+        return link
+
 
 s3 = S3()
