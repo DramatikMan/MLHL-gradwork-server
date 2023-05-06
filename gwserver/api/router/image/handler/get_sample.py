@@ -18,20 +18,16 @@ class Quantity(ConstrainedInt):
 @get("/sample")
 async def handler(
     session: Session,
-    category_uid: UID,
+    category_uid: UID | None,
     qty: Quantity,
 ) -> list[str]:
+    where_and_arg = [Image.uid <= 21000]
+
+    if category_uid is not None:
+        where_and_arg.append(Image.category_uid == category_uid)
+
     selected_UIDs = random.sample(
-        session.execute(
-            select(Image.uid).where(
-                and_(
-                    Image.uid <= 21000,
-                    Image.category_uid == category_uid,
-                )
-            )
-        )
-        .scalars()
-        .all(),
+        session.execute(select(Image.uid).where(and_(*where_and_arg))).scalars().all(),
         qty,
     )
 
