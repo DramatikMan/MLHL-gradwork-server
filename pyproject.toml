@@ -31,7 +31,7 @@ dependencies = [
     "onnxruntime-gpu>=1.14.1",
     "numpy>=1.24.2",
     "dramatiq[rabbitmq,watch]>=1.14.2",
-    "color-utils>=1.0.1",
+    "color-utils>=1.0.2",
 ]
 
 [tool.pdm.dev-dependencies]
@@ -40,7 +40,7 @@ dev = [
     "isort>=5.12.0",
     "mypy>=1.2.0",
     "ruff>=0.0.261",
-    "pytest",
+    "pytest>=7.3.1",
 ]
 
 [project.scripts]
