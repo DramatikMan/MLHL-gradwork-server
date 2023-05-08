@@ -1,6 +1,6 @@
 import logging
 
-from . import api, cli, core, interface, model, schema, tasks, utility
+from . import api, cli, core, interface, model, schema, tasks
 
 logging.basicConfig(
     level=logging.INFO,

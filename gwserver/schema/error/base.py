@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Type
+from typing import Any, Type
 
 from litestar.exceptions import HTTPException
 from litestar.openapi.datastructures import ResponseSpec
@@ -13,10 +13,18 @@ class Base(ABC, HTTPException):
         status_code: int,
         description: str,
         headers: dict[str, str] | None = None,
+        extra: dict[str, Any] | None = None,
     ) -> None:
-        super().__init__(status_code=status_code, detail=description, headers=headers)
+        super().__init__(
+            status_code=status_code,
+            detail=description,
+            headers=headers,
+            extra=extra,
+        )
+
         self._name = name
         self._description = description
+        self._extra = extra
 
         self.response: dict[int, ResponseSpec] = {
             self.status_code: ResponseSpec(
@@ -33,16 +41,22 @@ class Base(ABC, HTTPException):
 
 class StaticAPIError(Base):
     def _get_model(self) -> Type[BaseModel]:
-        return create_model(self._name, detail=(str, self._description))
+        fields: dict[str, Any] = {"detail": (str, self._description)}
+
+        if self._extra is not None:
+            fields["extra"] = (dict[str, Any], self._extra)
+
+        return create_model(self._name, **fields)
 
 
 class DynamicAPIError(Base):
     def _get_model(self) -> Type[BaseModel]:
-        return create_model(self._name, detail=(str, ...))
+        return create_model(self._name, detail=(str, ...), extra=(dict[str, Any] | None, ...))
 
-    def __call__(self, detail: str) -> HTTPException:
+    def __call__(self, detail: str, extra: dict[str, Any] | None = None) -> HTTPException:
         return HTTPException(
             status_code=self.status_code,
             detail=detail,
             headers=self.headers,
+            extra=extra,
         )

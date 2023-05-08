@@ -1,4 +1,5 @@
 import base64
+import imghdr
 import io
 
 import dramatiq
@@ -15,23 +16,23 @@ from gwserver.model import Image as Mapper
 from gwserver.schema.error.base import DynamicAPIError
 from gwserver.schema.response import Image as ResponseOne
 
-ImageOpenFailure = DynamicAPIError(
-    name="ImageOpenFailure",
-    status_code=status_codes.HTTP_422_UNPROCESSABLE_ENTITY,
-    description="Failed to open the payload as a JPEG image",
-)
-
-
-ImageNotSquare = DynamicAPIError(
-    name="ImageNotSquare",
+BadImage = DynamicAPIError(
+    name="BadImage",
     status_code=status_codes.HTTP_400_BAD_REQUEST,
     description="Expected a square JPEG image",
 )
 
 
+ImageOpenFailure = DynamicAPIError(
+    name="ImageOpenFailure",
+    status_code=status_codes.HTTP_422_UNPROCESSABLE_ENTITY,
+    description="Failed to open the payload with Pillow",
+)
+
+
 @post(
     content_media_type="image/jpeg",
-    responses=ImageOpenFailure.response | ImageNotSquare.response,
+    responses=BadImage.response | ImageOpenFailure.response,
 )
 async def handler(
     session: sa.orm.Session,
@@ -39,13 +40,23 @@ async def handler(
 ) -> ResponseOne:
     content = await data.read()
 
+    if (what := imghdr.what(io.BytesIO(content))) != "jpeg":
+        if what is None:
+            raise BadImage("Expected JPEG image", extra={"type": None})
+
+        got = what.upper()
+        raise BadImage(f"Expected JPEG image, got {got} instead", extra={"type": got})
+
     try:
         image = PIL.open(io.BytesIO(content), formats=("JPEG",))
     except Exception as ex:
         raise ImageOpenFailure(str(ex))
 
     if not (width := image.size[0]) == (height := image.size[1]):
-        raise ImageNotSquare(f"Expected a square JPEG image, got ({width}, {height}) instead")
+        raise BadImage(
+            f"Expected a square image, got size ({width}, {height}) instead",
+            extra={"size": [width, height]},
+        )
 
     stmt = sa.select(sa.func.count()).select_from(Mapper)
     count: int | None = session.scalar(stmt)

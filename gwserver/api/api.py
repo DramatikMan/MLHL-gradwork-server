@@ -10,17 +10,18 @@ from . import router
 
 class APIException(TypedDict):
     detail: str
+    extra: dict[str, Any] | list[Any] | None
 
 
 def exception_handler(_: Any, ex: Exception) -> Response[APIException]:
     if isinstance(ex, HTTPException):
         return Response(
-            content=APIException(detail=ex.detail),
+            content=APIException(detail=ex.detail, extra=ex.extra),
             status_code=ex.status_code,
         )
 
     return Response(
-        content=APIException(detail=str(ex)),
+        content=APIException(detail=str(ex), extra=None),
         status_code=status_codes.HTTP_500_INTERNAL_SERVER_ERROR,
     )
 
