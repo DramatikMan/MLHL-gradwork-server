@@ -10,9 +10,9 @@ class Settings(BaseSettings):
     API_PORT: int = 8080
 
     # database
-    DB_HOST: str = "postgres"
     DB_USER: str = "postgres"
     DB_PWD: str = "postgres"
+    DB_HOST: str = "postgres"
     DB_PORT: int = 5432
     DB_NAME: str = "postgres"
     _DB_URL: str = PrivateAttr()
@@ -25,7 +25,11 @@ class Settings(BaseSettings):
     S3_USER_DATA_SUBPATH: str = "userdata"
 
     # RabbitMQ
+    RABBITMQ_USER: str = "guest"
+    RABBITMQ_PWD: str = "guest"
     RABBITMQ_HOST: str = "broker"
+    RABBITMQ_PORT: int = 5672
+    _RABBITMQ_URL: str = PrivateAttr()
 
     # model
     MODEL_KEY: str = "model.onnx"
@@ -38,6 +42,7 @@ class Settings(BaseSettings):
     def __init__(self, **data: Any):
         super().__init__(**data)
         self._DB_URL = f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PWD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"  # noqa: E501
+        self._RABBITMQ_URL = f"amqp://{self.RABBITMQ_USER}:{self.RABBITMQ_PWD}@{self.RABBITMQ_HOST}:{self.RABBITMQ_PORT}"  # noqa: E501
 
 
 config = Settings()
