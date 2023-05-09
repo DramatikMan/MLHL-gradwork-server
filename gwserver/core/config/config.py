@@ -6,7 +6,7 @@ from pydantic import BaseSettings, PrivateAttr
 class Settings(BaseSettings):
     # API
     API_ROOT_PATH: str = ""
-    API_WORKERS: int = 4
+    API_WORKERS: int = 2
     API_PORT: int = 8080
 
     # database
