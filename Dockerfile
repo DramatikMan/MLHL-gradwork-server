@@ -16,7 +16,7 @@ FROM base AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 
-RUN pip install "pdm==2.6.0" \
+RUN pip install "pdm==2.6.1" \
     && pdm config check_update false \
     && pdm config venv.in_project true
 
