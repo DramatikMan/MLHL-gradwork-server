@@ -23,7 +23,7 @@ RUN pip install "pdm==2.7.0" \
 COPY pyproject.toml pdm.lock* ./
 ARG build_env
 COPY gwserver gwserver
-RUN bash -c 'if [[ "$build_env" == "dev" ]]; then pdm install; else pdm sync --prod; fi'
+RUN bash -c 'if [[ "$build_env" == "dev" ]]; then pdm sync; else pdm sync --prod; fi'
 
 ##################
 FROM base AS final
