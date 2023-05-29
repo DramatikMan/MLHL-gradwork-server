@@ -15,9 +15,9 @@ name = "gwserver"
 version = "1.0.0"
 description = ""
 authors = [{name = "Sergey Pavlov", email = "self@sergeypavlov.dev"}]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-    "litestar>=2.0.0a6",
+    "litestar>=2.0.0a7",
     "pydantic>=1.10.7",
     "typer>=0.7.0",
     "uvicorn[standard]>=0.21.1",
@@ -26,9 +26,9 @@ dependencies = [
     "sqlalchemy>=2.0.9",
     "psycopg2>=2.9.6",
     "boto3>=1.26.108",
-    "pandas>=2.0.0",
+    "pandas>=2.0.2",
     "pillow>=9.5.0",
-    "onnxruntime-gpu>=1.14.1",
+    "onnxruntime-gpu>=1.15.0",
     "numpy>=1.24.2",
     "dramatiq[rabbitmq,watch]>=1.14.2",
     "color-utils>=1.0.2",
@@ -39,7 +39,7 @@ dev = [
     "black>=23.3.0",
     "isort>=5.12.0",
     "mypy>=1.3.0",
-    "ruff>=0.0.261",
+    "ruff>=0.0.270",
     "pytest>=7.3.1",
 ]
 
@@ -63,7 +63,7 @@ profile = "black"
 [tool.ruff]
 fix = true
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 
 [tool.mypy]
 exclude = "migrations|tasks"

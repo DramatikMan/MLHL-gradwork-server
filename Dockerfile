@@ -1,4 +1,4 @@
-FROM python:3.10-slim AS base
+FROM python:3.11-slim AS base
 WORKDIR /app
 
 # global system
@@ -16,14 +16,14 @@ FROM base AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 
-RUN pip install "pdm==2.6.1" \
+RUN pip install "pdm==2.7.0" \
     && pdm config check_update false \
     && pdm config venv.in_project true
 
 COPY pyproject.toml pdm.lock* ./
 ARG build_env
 COPY gwserver gwserver
-RUN bash -c 'if [[ "$build_env" == "dev" ]]; then pdm sync; else pdm sync --prod; fi'
+RUN bash -c 'if [[ "$build_env" == "dev" ]]; then pdm install; else pdm sync --prod; fi'
 
 ##################
 FROM base AS final

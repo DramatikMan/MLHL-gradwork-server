@@ -23,7 +23,7 @@ class Base(Router, ABC, Generic[Mapper, ResponseOne]):
             path,
             tags=tags,
             route_handlers=[handler.get_one(interface)],
-            dependencies={"session": Provide(DB)},
+            dependencies={"session": Provide(DB, sync_to_thread=True)},
         )
 
 
