@@ -13,3 +13,4 @@ class Image(BaseModel):
     category: Category | None
     color_RGB: COLOR_RGB | None
     color_RYB: COLOR_RYB | None
+    link: str

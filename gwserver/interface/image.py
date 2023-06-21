@@ -2,6 +2,7 @@ from typing import Type
 
 from sqlalchemy.sql.elements import ColumnElement
 
+from gwserver.core.s3 import s3
 from gwserver.model import Image as Mapper
 from gwserver.schema.response import Image as Response
 
@@ -26,6 +27,7 @@ class Interface(Base[Mapper, Response]):
                 "category": vars(rec.category) if rec.category is not None else None,
                 "color_RGB": rec.color_rgb,
                 "color_RYB": rec.color_ryb,
+                "link": s3.get_temp_link(rec.path),
             }
         )
 

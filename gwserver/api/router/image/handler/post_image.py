@@ -12,6 +12,7 @@ from PIL import Image as PIL
 
 from gwserver import tasks
 from gwserver.core import config
+from gwserver.core.s3 import s3
 from gwserver.model import Image as Mapper
 from gwserver.schema.error.base import DynamicAPIError
 from gwserver.schema.response import Image as ResponseOne
@@ -89,5 +90,6 @@ async def handler(
         {
             "uid": record.uid,
             "path": record.path,
+            "link": s3.get_temp_link(record.path),
         }
     )
