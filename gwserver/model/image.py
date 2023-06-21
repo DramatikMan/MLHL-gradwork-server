@@ -15,8 +15,8 @@ class Image(Base):
     __tablename__ = "IMAGE"
 
     __table_args__ = (
-        CheckConstraint(f"""color_rgb in ('{"', '".join(RGB.keys())}')"""),
-        CheckConstraint(f"""color_ryb in ('{"', '".join(RYB.keys())}')"""),
+        CheckConstraint(f"""color_rgb IN ('{"', '".join(RGB.keys())}')""", name="RGB_check"),
+        CheckConstraint(f"""color_ryb IN ('{"', '".join(RYB.keys())}')""", name="RYB_check"),
     )
 
     uid: Mapped[int] = mapped_column(
@@ -27,9 +27,14 @@ class Image(Base):
     )
 
     path: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-
-    category_uid: Mapped[int | None] = mapped_column(ForeignKey(Category.uid))
-    category: Mapped["Category"] = relationship(lazy=False)
-
     color_rgb: Mapped[COLOR_RGB | None] = mapped_column(String)
     color_ryb: Mapped[COLOR_RYB | None] = mapped_column(String)
+
+    category_uid: Mapped[int | None] = mapped_column(
+        ForeignKey(
+            Category.uid,
+            name="category_uid_fk",
+        )
+    )
+
+    category: Mapped["Category"] = relationship()

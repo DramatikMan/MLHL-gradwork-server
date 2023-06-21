@@ -52,5 +52,5 @@ async def handler(
 
     return [
         s3.get_temp_link(i)
-        for i in session.execute(select(Image.path).where(Image.uid.in_(sampled))).scalars()
+        for i in session.scalars(select(Image.path).where(Image.uid.in_(sampled)))
     ]
