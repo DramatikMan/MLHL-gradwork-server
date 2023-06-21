@@ -9,7 +9,7 @@ cmd = t.Typer(help="Application start.")
 
 @cmd.command(help="Start API server.")
 def api(
-    workers: int = t.Option(config.API_WORKERS, help="Nubmer of workers."),
+    workers: int = t.Option(config.API_WORKERS, help="Number of workers."),
     port: int = t.Option(config.API_PORT, help="Server port."),
 ) -> None:
     sp.run(
@@ -25,8 +25,10 @@ def api(
 
 
 @cmd.command(help="Start workers for background tasks.")
-def workers() -> None:
+def workers(
+    count: int = t.Option(2, help="Number of workers."),
+) -> None:
     sp.run(
-        ["dramatiq", "gwserver.tasks"],
+        ["dramatiq", f"-p {count}", "gwserver.tasks"],
         check=True,
     )

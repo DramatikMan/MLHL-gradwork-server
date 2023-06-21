@@ -28,7 +28,7 @@ main:
   sidecars:
     - name: workers
       command: ["gwserver"]
-      args: ["start", "workers"]
+      args: ["start", "workers", "--count=2"]
 
   persistentVolumes:
     - name: gwserver-model
