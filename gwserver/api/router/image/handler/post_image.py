@@ -1,6 +1,8 @@
 import base64
 import imghdr
 import io
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import dramatiq
 import sqlalchemy as sa
@@ -44,9 +46,16 @@ async def handler(
     if (what := imghdr.what(io.BytesIO(content))) != "jpeg":
         if what is None:
             raise BadImage("Expected JPEG image", extra={"type": None})
+        elif what == "png":
+            png = PIL.open(io.BytesIO(content), formats=("PNG",))
 
-        got = what.upper()
-        raise BadImage(f"Expected JPEG image, got {got} instead", extra={"type": got})
+            with TemporaryDirectory() as tmpdir:
+                tmpfile = Path(f"{tmpdir}/file.jpg")
+                png.convert("RGB").save(tmpfile)
+                content = tmpfile.read_bytes()
+        else:
+            got = what.upper()
+            raise BadImage(f"Expected JPEG image, got {got} instead", extra={"type": got})
 
     try:
         image = PIL.open(io.BytesIO(content), formats=("JPEG",))
